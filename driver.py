@@ -19,7 +19,8 @@ class CreateDriver():
 
     def set_driver(self, browser: str, env: str, driver_path=None, *args, **kwargs):
         """
-        Set webdriver.
+        Configure webdriver.
+
         :param browser: browser name (np. chrome, firefox)
         :param env: environment (remote, local)
         :param args: additional arguments passed to browser
