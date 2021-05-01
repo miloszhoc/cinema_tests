@@ -1,3 +1,4 @@
+import requests
 from requests import Session
 from selenium import webdriver
 from env_data import SELENIUM_HUB_URL
@@ -56,3 +57,25 @@ class CreateDriver():
             print('No existing webdriver instance\n Use  set_driver() method')
             return
         return self._driver
+
+
+def update_session_cookies(driver: webdriver.Chrome) -> Session:
+    """
+    Pass cookies from selenium library to requests
+    """
+    cookies = driver.get_cookies()
+    session = Session()
+    for cookie in cookies:
+        session.cookies.set(cookie['name'], cookie['value'])
+    return session
+
+
+def update_driver_cookies(session: Session, driver: webdriver.Chrome) -> webdriver.Chrome:
+    """
+    Pass cookies from requests library to selenium
+    """
+    driver.delete_all_cookies()
+    for k, v in session.cookies.items():
+        driver.add_cookie({'name': k, 'value': v})
+    driver.refresh()
+    return driver
