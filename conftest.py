@@ -1,5 +1,5 @@
 import pytest
-from setup_env import APP_URL
+from env_data import APP_URL
 from driver import CreateDriver
 
 

@@ -1,6 +1,6 @@
 from requests import Session
 from selenium import webdriver
-from setup_env import SELENIUM_HUB_URL
+from env_data import SELENIUM_HUB_URL
 
 
 class CreateDriver():
