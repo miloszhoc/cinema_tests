@@ -16,7 +16,7 @@ def test_login_as_staff_admin(get_worker_page):
     with pytest.assume:
         assert page.is_element_on_page(page.dynamic_locator(page.HREF_MODULE_L_D, 'Filmy'))
     with pytest.assume:
-        assert not page.is_element_on_page(page.dynamic_locator(page.HREF_MODULE_L_D, 'Typy biletów'))
+        assert page.is_element_on_page(page.dynamic_locator(page.HREF_MODULE_L_D, 'Typy biletów'))
     page.logout()
 
 # def test_login_as_admin(login_logout):
