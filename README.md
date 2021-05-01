@@ -1,5 +1,5 @@
 # cinema-tests
-E2E and manual tests for cinema project.
+E2E and manual tests for [cinema project](https://github.com/miloszhoc/cinema).
 
 
 Test cases for manual testing:
