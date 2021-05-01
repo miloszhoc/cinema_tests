@@ -58,7 +58,7 @@ class PageManager(object):
         element.send_keys(text)
         return text
 
-    def dynamic_locator(self, locator: tuple, *args, **kwargs):
+    def dynamic_locator(self, locator: tuple, *args, **kwargs) -> tuple:
         """
         Handles dynamic locator
 
@@ -78,11 +78,11 @@ class PageManager(object):
         """
         return self.driver.find_element(*locator).text.strip()
 
-    def is_element_on_page(self, locator: tuple):
+    def is_element_on_page(self, locator: tuple) -> bool:
         """
         Returns True if element is on page in other case returns False.
         :param locator: locator to element
-        :return:
+        :return: True or False
         """
         try:
             self.driver.find_element(*locator)
