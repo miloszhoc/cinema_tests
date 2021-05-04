@@ -8,6 +8,17 @@ from bs4 import BeautifulSoup
 
 @pytest.fixture(scope='function')
 def login_logout(get_worker_module):
+    """
+    Login as user, enter url and logout after test finishes.
+
+    Usage: ``login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse').``
+
+    - login: user login
+    - passwd: user password
+    - module_endpoint: module endpoint url which will be open after login (e.g. /worker/seanse)
+    :return: driver instance
+    """
+
     browser = get_worker_module
 
     def login_as(login: str, passwd: str, module_endpoint: str) -> webdriver.Chrome:
