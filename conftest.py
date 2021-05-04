@@ -33,7 +33,7 @@ def setup_browser():
 
 
 @pytest.fixture(scope='function')
-def get_client_page(setup_browser):
+def get_client_module(setup_browser):
     browser = setup_browser
     browser.get(APP_URL)
 
@@ -41,7 +41,7 @@ def get_client_page(setup_browser):
 
 
 @pytest.fixture(scope='function')
-def get_worker_page(setup_browser):
+def get_worker_module(setup_browser):
     browser = setup_browser
     browser.get(APP_URL + '/worker')
 

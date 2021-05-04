@@ -3,8 +3,8 @@ from env_data import STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, ADMIN_LOG, ADMIN_PASS, W
 from pom.worker.pages.login_page import PreLoginP
 
 
-def test_login_as_staff_admin(get_worker_page):
-    driver = get_worker_page
+def test_login_as_staff_admin(get_worker_module):
+    driver = get_worker_module
     page = PreLoginP(driver)
     page = page.enter_login_page().login(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS)
     with pytest.assume:
@@ -20,8 +20,8 @@ def test_login_as_staff_admin(get_worker_page):
     page.logout()
 
 
-def test_login_as_admin(get_worker_page):
-    driver = get_worker_page
+def test_login_as_admin(get_worker_module):
+    driver = get_worker_module
     page = PreLoginP(driver)
     page = page.enter_login_page().login(ADMIN_LOG, ADMIN_PASS)
     with pytest.assume:
@@ -37,8 +37,8 @@ def test_login_as_admin(get_worker_page):
     page.logout()
 
 
-def test_login_as_worker(get_worker_page):
-    driver = get_worker_page
+def test_login_as_worker(get_worker_module):
+    driver = get_worker_module
     page = PreLoginP(driver)
     page = page.enter_login_page().login(WORKER_LOG, WORKER_PASS)
     with pytest.assume:
