@@ -12,6 +12,7 @@ are [here](https://docs.google.com/spreadsheets/d/1waFV-8ZkhgdNZUMMdUEsn7iaLLuMz
 * python
 * selenium
 * selenium grid
+* requests
 * pytest
 * pytest plugins:
     * pytest-dist
