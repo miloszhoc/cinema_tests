@@ -6,7 +6,8 @@ from pom.worker.pages.movies.list_page import ActiveMoviesListP
 from utils.utils import DateUtils
 
 
-def test_add_and_check_movie_details(login_logout):
+@pytest.mark.parametrize('is_deleted', [True, False])
+def test_add_movie_and_check_details(login_logout, is_deleted):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/filmy')
     page = ActiveMoviesListP(browser)
 
@@ -18,7 +19,12 @@ def test_add_and_check_movie_details(login_logout):
     link = 'https://genius.com/Rick-astley-never-gonna-give-you-up-lyrics'
     thumbnail_file_path = IMG_FILE
     youtube_id = 'dQw4w9WgXcQ'
-    deleted = False
+
+    if is_deleted:
+        deleted = True
+    else:
+        deleted = False
+
     page = page.open_add_movie_form().add_movie(title, director, release_year, description, link,
                                                 thumbnail_file_path, youtube_id, deleted, duration)
 
@@ -26,8 +32,13 @@ def test_add_and_check_movie_details(login_logout):
         assert page.check_url('szczegoly-filmu')
 
     page = page.open_panel_page().open_module('Filmy')
-    page.is_element_on_page(page.dynamic_locator(page.TEXT_DELETED_COLUMN_VALUE_D, title=title, deleted='Nie'))
-    page = page.open_movie_details(title)
+    if not is_deleted:
+        page.is_element_on_page(page.dynamic_locator(page.TEXT_DELETED_COLUMN_VALUE_D, title=title, deleted='Nie'))
+        page = page.open_movie_details(title)
+    else:
+        page = page.open_deleted_movies_list()
+        page.is_element_on_page(page.dynamic_locator(page.TEXT_DELETED_COLUMN_VALUE_D, title=title, deleted='Tak'))
+        page = page.open_movie_details(title)
 
     with pytest.assume:
         assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Tytuł', value=title))
