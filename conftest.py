@@ -15,6 +15,10 @@ def pytest_runtest_makereport(item, call):
         if (report.skipped and xfail) or (report.failed and not xfail):
             # only add additional html on failure
             web_driver = item.funcargs['setup_browser']
+            extra.append(pytest_html.extras.html(f'<div>URL: {str(web_driver.current_url)}</div>'))
+            extra.append(pytest_html.extras.html(f'cookies: <div>{str(web_driver.get_cookies())}</div>'))
+            extra.append(pytest_html.extras.html(f'cache: <div>{str(web_driver.application_cache)}</div>'))
+            extra.append(pytest_html.extras.html(f'browser logs: <div>{str(web_driver.get_log("browser"))}</div>'))
             image = web_driver.get_screenshot_as_base64()
             extra.append(pytest_html.extras.image(image))
         report.extra = extra
