@@ -32,7 +32,7 @@ class ActiveTicketTypesListP(TicketTypesListP):
     HREF_ADD_TICKET_TYPE_S = (By.LINK_TEXT, 'Dodaj typ biletu')
     HREF_DELETED_TICKET_TYPES_S = (By.LINK_TEXT, 'Usunięte typy biletów')
 
-    def open_add_movie_form(self) -> ticket_type_form.TicketTypeAddFormP:
+    def open_add_ticket_type_form(self) -> ticket_type_form.TicketTypeAddFormP:
         """
         Open new ticket type form.
 
