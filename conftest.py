@@ -24,7 +24,7 @@ def pytest_runtest_makereport(item, call):
         report.extra = extra
 
 
-@pytest.fixture(autouse=True, scope='module')
+@pytest.fixture(scope='module')
 def setup_browser():
     driver = CreateDriver()
     # driver.set_driver('chrome', 'local', './drivers/chromedriver.exe', '--headless')
