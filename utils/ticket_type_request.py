@@ -37,7 +37,6 @@ class CreateTicketType:
         :param deleted: is deleted
         :return: True or raises exception
         """
-        # todo implement `deleted`
         self.__login()
         self.session.get(APP_URL + r'/worker/typy-biletow/')
         r = self.session.get(APP_URL + r'/worker/dodaj-typ/')
@@ -47,7 +46,8 @@ class CreateTicketType:
         r = self.session.post(APP_URL + r'/worker/dodaj-typ/', data={'csrfmiddlewaretoken': csrf_form_add_ticket,
                                                                      'type': type_name,
                                                                      'price': price,
-                                                                     'conditions': conditions})
+                                                                     'conditions': conditions,
+                                                                     'deleted': 'on' if deleted else ''})
         self.__close_session()
         if r.status_code == 200:
             return True
