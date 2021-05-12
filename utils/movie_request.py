@@ -1,31 +1,10 @@
-import requests
 from bs4 import BeautifulSoup
 
-from env_data import APP_URL, STAFF_ADMIN_PASS, STAFF_ADMIN_LOG, IMG_FILE
+from env_data import APP_URL
+from utils.common_request import CommonRequest
 
 
-class CreateMovie:
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.session = requests.Session()
-
-    def __update_cookie_header(self) -> None:
-        self.session.headers['Vary'] = 'Cookie'
-        self.session.headers['Cookie'] = 'csrftoken=' + self.session.cookies.get(
-            'csrftoken') + ';' + 'sessionid=' + self.session.cookies.get('sessionid')
-
-    def __login(self) -> None:
-        page_source = self.session.get(APP_URL + '/worker/login/').text
-        csrf = BeautifulSoup(page_source, 'html.parser').find('input', {'name': "csrfmiddlewaretoken"}).get('value')
-        self.session.headers['Cookie'] = 'csrftoken=' + self.session.cookies.get('csrftoken')
-        self.session.post(APP_URL + '/worker/login/', data={'username': STAFF_ADMIN_LOG,
-                                                            'password': STAFF_ADMIN_PASS,
-                                                            'csrfmiddlewaretoken': csrf})
-        self.__update_cookie_header()
-
-    def __close_session(self):
-        self.session.close()
+class CreateMovie(CommonRequest):
 
     def create_movie(self,
                      title: str,
@@ -50,7 +29,7 @@ class CreateMovie:
         :return: True or raises exception
         """
 
-        self.__login()
+        self._login()
         self.session.get(APP_URL + r'/worker/filmy/')
         r = self.session.get(APP_URL + r'/worker/dodaj-film/')
         page_source_form_add_ticket = r.text
@@ -69,7 +48,7 @@ class CreateMovie:
                                                                       'trailer_youtube_id': youtube_id,
                                                                       'deleted': 'on' if deleted else ''},
                               files=files)
-        self.__close_session()
+        self._close_session()
         if r.status_code == 200:
             return True
         else:
