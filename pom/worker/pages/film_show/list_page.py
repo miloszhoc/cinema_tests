@@ -1,12 +1,23 @@
 from pom.worker.pages.top_menu import TopMenuP
 from selenium.webdriver.common.by import By
 import pom.worker.pages.film_show.film_show_form as film_show_form
+import pom.worker.pages.film_show.film_show_details as film_show_details
 
 
 class FilmShowListP(TopMenuP):
+    TEXT_LIST_TITLE_D = (By.XPATH, '//h3[contains(text(), "{}")]')
     HREF_SHOW_DETAILS_D = (
         By.XPATH, '//td[contains(text(), "{}")]//following-sibling::td//a[contains(text(), "Przejdź do szczegółów")]')
     TEXT_TABLE_HEADER_D = (By.XPATH, '//th[contains(text(), "{}")]')
+
+    def open_film_show_details(self, film_show_title: str) -> film_show_details.FilmShowDetailsP:
+        """
+        Open film show details.
+
+        :return: Film show details page.
+        """
+        self.wait_and_click(self.dynamic_locator(self.HREF_SHOW_DETAILS_D, film_show_title))
+        return film_show_details.FilmShowDetailsP(self.driver)
 
 
 class ArchiveFilmShowListP(FilmShowListP):
