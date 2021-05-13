@@ -7,6 +7,11 @@ import selenium.common.exceptions as se
 class PageManager(object):
 
     def __init__(self, driver: Chrome) -> None:
+        """
+        Base class which holds common methods for all pages.
+
+        :param driver: webdriver instance
+        """
         self.driver = driver
 
     def _wait_to_be_clickable(self, locator: tuple, timeout: int = 20) -> None:
