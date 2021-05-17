@@ -19,3 +19,9 @@ STAFF_ADMIN_LOG = config[environment]['STAFF_ADMIN_LOG']
 STAFF_ADMIN_PASS = config[environment]['STAFF_ADMIN_PASS']
 WORKER_LOG = config[environment]['WORKER_LOG']
 WORKER_PASS = config[environment]['WORKER_PASS']
+
+# main project dir
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# image file to upload
+IMG_FILE = os.path.join(CURRENT_DIR, 'utils', 'movie_image.png')

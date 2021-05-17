@@ -59,23 +59,23 @@ class CreateDriver():
         return self._driver
 
 
-def update_session_cookies(driver: webdriver.Chrome) -> Session:
+def update_session_cookies(browser: webdriver.Chrome) -> Session:
     """
     Pass cookies from selenium library to requests
     """
-    cookies = driver.get_cookies()
+    cookies = browser.get_cookies()
     session = Session()
     for cookie in cookies:
         session.cookies.set(cookie['name'], cookie['value'])
     return session
 
 
-def update_driver_cookies(session: Session, driver: webdriver.Chrome) -> webdriver.Chrome:
+def update_browser_cookies(session: Session, browser: webdriver.Chrome) -> webdriver.Chrome:
     """
     Pass cookies from requests library to selenium
     """
-    driver.delete_all_cookies()
+    browser.delete_all_cookies()
     for k, v in session.cookies.items():
-        driver.add_cookie({'name': k, 'value': v})
-    driver.refresh()
-    return driver
+        browser.add_cookie({'name': k, 'value': v})
+    browser.refresh()
+    return browser
