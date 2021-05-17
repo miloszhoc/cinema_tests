@@ -2,6 +2,8 @@ import pytest
 from env_data import APP_URL
 from driver import CreateDriver
 
+pytest_plugins = ('requests_fixtures',)
+
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
