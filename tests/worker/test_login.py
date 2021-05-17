@@ -52,3 +52,12 @@ def test_login_as_worker(get_worker_module):
     with pytest.assume:
         assert page.is_element_on_page(page.dynamic_locator(page.HREF_MODULE_D, 'Typy biletów'))
     page.logout()
+
+
+def test_login_invalid_credentials(get_worker_module):
+    driver = get_worker_module
+    page = PreLoginP(driver)
+    page.enter_login_page().login('test', 'test')
+
+    assert page.is_element_on_page(page.dynamic_locator(page.TEXT_ELEMENT_D,
+                                                        'Wprowadź poprawne wartości pól użytkownik oraz hasło. Uwaga: wielkość liter ma znaczenie.'))
