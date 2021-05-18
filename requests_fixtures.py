@@ -4,6 +4,7 @@ Creating test data using requests
 """
 import pytest
 from env_data import IMG_FILE
+from utils.film_show_request import CreateFilmShow
 from utils.utils import DateUtils
 
 
@@ -51,7 +52,23 @@ def create_movie():
             'duration': duration,
             'deleted': deleted,
             'description': description}
-    movie.create_movie(movie_title, director, release_year, description, link, thumbnail_file_path, thumbnail_name,
-                       youtube_id, deleted, duration)
+    movie_id = movie.create_movie(movie_title, director, release_year, description, link, thumbnail_file_path,
+                                  thumbnail_name, youtube_id, deleted, duration)
+    data['movie_id'] = movie_id
+    return data
 
+
+@pytest.fixture(scope='function')
+def create_active_film_show(create_movie):
+    film_show = CreateFilmShow()
+    current_datetime = DateUtils.get_current_datetime()
+    start_datetime = DateUtils.get_current_datetime(minutes=50)
+    break_time = '00:05:00'
+
+    data = {'film_show': film_show,
+            'current_date': current_datetime,
+            'start_date': start_datetime,
+            'break_time': break_time}
+
+    film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
     return data
