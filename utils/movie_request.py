@@ -10,7 +10,7 @@ class CreateMovie(CommonRequest):
                      title: str,
                      director: str, release_year: str, description: str, link: str,
                      thumbnail_file_path: str, thumbnail_name: str, youtube_id: str, deleted: bool,
-                     duration: str = '00:15:00') -> bool:
+                     duration: str = '00:15:00') -> int:
         """
         Creates movie using requests.
 
@@ -26,7 +26,7 @@ class CreateMovie(CommonRequest):
         :param youtube_id: youtube video id
         :param deleted: is deleted
         :param duration: movie duration
-        :return: True or raises exception
+        :return: movie id or raises exception
         """
 
         self._login()
@@ -50,6 +50,6 @@ class CreateMovie(CommonRequest):
                               files=files)
         self._close_session()
         if r.status_code == 200:
-            return True
+            return r.url.split('/')[-1]
         else:
             raise AssertionError('Cann not create movie.')
