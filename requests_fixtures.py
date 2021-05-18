@@ -68,7 +68,8 @@ def create_active_film_show(create_movie):
     data = {'film_show': film_show,
             'current_date': current_datetime,
             'start_date': start_datetime,
-            'break_time': break_time}
+            'break_time': break_time,
+            'movie_title': create_movie['title']}
 
     film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
     return data
