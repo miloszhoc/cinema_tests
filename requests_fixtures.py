@@ -7,7 +7,7 @@ from env_data import IMG_FILE
 from utils.utils import DateUtils
 
 
-@pytest.fixture(autouse=True, scope='function')
+@pytest.fixture(scope='function')
 def create_ticket_type():
     from utils.ticket_type_request import CreateTicketType
     ticket = CreateTicketType()
@@ -25,7 +25,7 @@ def create_ticket_type():
     return data
 
 
-@pytest.fixture(autouse=True, scope='function')
+@pytest.fixture(scope='function')
 def create_movie():
     from utils.movie_request import CreateMovie
     movie = CreateMovie()
