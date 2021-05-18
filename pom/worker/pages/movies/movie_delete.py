@@ -24,7 +24,7 @@ class MovieDeleteP(TopMenuP):
         """
         import pom.worker.pages.movies.list_page as list_page
         self.wait_and_click(self.BUTTON_YES_S)
-        return list_page.MovieListP(self.driver)
+        return list_page.ActiveMoviesListP(self.driver)
 
     def exit_form_without_deletion(self):
         """
