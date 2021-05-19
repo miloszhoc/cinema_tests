@@ -73,3 +73,20 @@ def create_active_film_show(create_movie):
 
     film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
     return data
+
+
+@pytest.fixture(scope='function')
+def create_archived_film_show(create_movie):
+    film_show = CreateFilmShow()
+    current_datetime = DateUtils.get_current_datetime()
+    start_datetime = DateUtils.get_current_datetime(minutes=-60)
+    break_time = '00:05:00'
+
+    data = {'film_show': film_show,
+            'current_date': current_datetime,
+            'start_date': start_datetime,
+            'break_time': break_time,
+            'movie_title': create_movie['title']}
+
+    film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
+    return data
