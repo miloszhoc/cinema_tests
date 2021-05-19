@@ -1,3 +1,4 @@
+from pom.worker.pages.film_show.reservations.reservation_form import ReservationAddFormP
 from pom.worker.pages.top_menu import TopMenuP
 from selenium.webdriver.common.by import By
 import pom.worker.pages.film_show.film_show_delete as film_show_delete
@@ -11,6 +12,9 @@ class FilmShowDetailsP(TopMenuP):
                                '//div[@class="name"]/b[contains(text(), "{name}")]//..//../div[contains(text(), "{value}")]')
     HREF_ADD_RESERVATION_S = (By.LINK_TEXT, 'Dodaj rezerwację')
 
+    # reservation list
+    TEXT_TABLE_HEADER_D = (By.XPATH, '//th[contains(text(), "{}")]')
+
     def open_update_film_show_form(self):
         import pom.worker.pages.film_show.film_show_form as film_show_form
 
@@ -21,6 +25,6 @@ class FilmShowDetailsP(TopMenuP):
         self.wait_and_click(self.HREF_DELETE_FILM_SHOW_S)
         return film_show_delete.FilmShowDeleteP(self.driver)
 
-    def open_add_reservation_form(self):
-        # todo implement
-        pass
+    def open_add_reservation_form(self) -> ReservationAddFormP:
+        self.wait_and_click(self.HREF_ADD_RESERVATION_S)
+        return ReservationAddFormP(self.driver)
