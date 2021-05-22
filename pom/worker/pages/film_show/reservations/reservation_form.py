@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 
 from pom.worker.pages.top_menu import TopMenuP
 
@@ -39,11 +40,14 @@ class ReservationAddForm1stTabP(TopMenuP):
 
     def click_next_button(self):
         self.wait_and_click(self.BUTTON_NEXT_S)
+        return ReservationAddForm2ndTabP(self.driver)
 
 
 class ReservationAddForm2ndTabP(TopMenuP):
     TEXT_SUMMARY_D = (By.XPATH, '//td[contains(text(), "{label}")]//following-sibling::td[contains(text(), "{value}")]')
     BUTTON_NEXT_S = (By.XPATH, '//button[@value="Dalej"]')
+    SELECT_TICKET_TYPE_D = (By.XPATH,
+                            '//option[contains(text(), "{}") and @selected]/../../../following-sibling::div[contains(@id, "tickettype_id")]//select')
 
     def check_summary(self, label: str, value: str) -> bool:
         """
@@ -55,12 +59,22 @@ class ReservationAddForm2ndTabP(TopMenuP):
         """
         return self.is_element_on_page(self.dynamic_locator(self.TEXT_SUMMARY_D, label=label, value=value))
 
-    def choose_ticket_type(self, seat_label: str, ticket_type_name: str):
-        pass
-        # todo
+    def choose_ticket_type(self, seat_label: str, ticket_type_name: str) -> dict:
+        """
+
+        Choose ticket type for a seat.
+
+        :param seat_label: seat label (e.g. A1)
+        :param ticket_type_name: ticket type name
+        :return: dict (seat_label: ticket_type_name)
+        """
+        Select(self.driver.find_element(
+            *self.dynamic_locator(self.SELECT_TICKET_TYPE_D, seat_label))).select_by_visible_text(ticket_type_name)
+        return {seat_label: ticket_type_name}
 
     def click_next_button(self):
         self.wait_and_click(self.BUTTON_NEXT_S)
+        return ReservationAddForm3rdTabP(self.driver)
 
 
 class ReservationAddForm3rdTabP(TopMenuP):
@@ -69,6 +83,9 @@ class ReservationAddForm3rdTabP(TopMenuP):
     CHECKBOX_CONFIRMED_S = (By.NAME, 'confirmed')
     CHECKBOX_CONFIRMATION_EMAIL_S = (By.NAME, 'confirmation_email')
     BUTTON_SEND_RESERVATION_S = (By.XPATH, '//button[@value="Zarezerwuj"]')
+    TEXT_TICKET_TYPE_D = (By.XPATH,
+                          '//div[@class="seat_name" and contains(text(), "{seat}")]//following-sibling::div[@class="ticket_type" and contains(text(), "{ticket}")]')
+    TEXT_TOTAL_PRICE_S = (By.ID, 'total_price')
 
     def check_summary(self, label: str, value: str) -> bool:
         """
@@ -81,8 +98,8 @@ class ReservationAddForm3rdTabP(TopMenuP):
         return self.is_element_on_page(self.dynamic_locator(self.TEXT_SUMMARY_D, label=label, value=value))
 
     def check_ticket_type(self, seat_label: str, ticket_type_name: str):
-        pass
-        # todo check ticket types
+        return self.is_element_on_page(
+            self.dynamic_locator(self.TEXT_TICKET_TYPE_D, seat=seat_label, ticket=ticket_type_name))
 
     def click_paid_checkbox(self):
         self.wait_and_click(self.CHECKBOX_PAID_S)
@@ -92,6 +109,9 @@ class ReservationAddForm3rdTabP(TopMenuP):
 
     def click_confirmation_email_checkbox(self):
         self.wait_and_click(self.CHECKBOX_CONFIRMATION_EMAIL_S)
+
+    def get_total_price(self, total_price: str):
+        return total_price.replace('.', ',') in self.TEXT_TOTAL_PRICE_S
 
     def send_reservation(self):
         """
