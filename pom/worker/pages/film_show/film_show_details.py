@@ -1,10 +1,11 @@
-from pom.worker.pages.film_show.reservations.reservation_form import ReservationAddFormP
+from pom.worker.pages.film_show.reservations.reservation_form import ReservationAddForm1stTabP
 from pom.worker.pages.top_menu import TopMenuP
 from selenium.webdriver.common.by import By
 import pom.worker.pages.film_show.film_show_delete as film_show_delete
 
 
 class FilmShowDetailsP(TopMenuP):
+    TEXT_MESSAGE_S = (By.CLASS_NAME, 'message')
     HREF_UPDATE_FILM_SHOW_S = (By.LINK_TEXT, 'Aktualizuj informacje o seansie')
     HREF_DELETE_FILM_SHOW_S = (By.LINK_TEXT, 'Usuń seans')
     HREF_MOVIE_DETAILS_S = (By.LINK_TEXT, 'Przejdź do szczegółów filmu')
@@ -25,6 +26,15 @@ class FilmShowDetailsP(TopMenuP):
         self.wait_and_click(self.HREF_DELETE_FILM_SHOW_S)
         return film_show_delete.FilmShowDeleteP(self.driver)
 
-    def open_add_reservation_form(self) -> ReservationAddFormP:
+    def open_add_reservation_form(self) -> ReservationAddForm1stTabP:
         self.wait_and_click(self.HREF_ADD_RESERVATION_S)
-        return ReservationAddFormP(self.driver)
+        return ReservationAddForm1stTabP(self.driver)
+
+    def check_message(self, message: str) -> bool:
+        """
+        Checks message which appears on screen
+
+        :param message: message content
+        :return: True or false
+        """
+        return message in self.get_text(self.TEXT_MESSAGE_S)
