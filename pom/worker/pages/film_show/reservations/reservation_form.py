@@ -7,7 +7,7 @@ from pom.worker.pages.top_menu import TopMenuP
 class ReservationAddForm1stTabP(TopMenuP):
     INPUT_NAME_S = (By.NAME, 'first_name')
     INPUT_LAST_NAME_S = (By.NAME, 'last_name')
-    INPUT_EMAIL_S = (By.NAME, 'last_name')
+    INPUT_EMAIL_S = (By.NAME, 'email')
     INPUT_PHONE_S = (By.NAME, 'phone_number')
     CHECKBOX_SEAT_D = (By.XPATH, '//label[contains(text(), "{}")]//input[@type="checkbox"]')
     BUTTON_NEXT_S = (By.XPATH, '//button[@value="Dalej"]')
@@ -25,7 +25,7 @@ class ReservationAddForm1stTabP(TopMenuP):
         return email
 
     def type_phone_number(self, number: str) -> str:
-        self.wait_and_type(self.INPUT_EMAIL_S, number)
+        self.wait_and_type(self.INPUT_PHONE_S, number)
         return number
 
     def choose_seat(self, seat: str) -> str:
@@ -110,8 +110,8 @@ class ReservationAddForm3rdTabP(TopMenuP):
     def click_confirmation_email_checkbox(self):
         self.wait_and_click(self.CHECKBOX_CONFIRMATION_EMAIL_S)
 
-    def get_total_price(self, total_price: str):
-        return total_price.replace('.', ',') in self.TEXT_TOTAL_PRICE_S
+    def check_total_price(self, total_price: str):
+        return total_price.replace('.', ',') in self.get_text(self.TEXT_TOTAL_PRICE_S)
 
     def send_reservation(self):
         """
