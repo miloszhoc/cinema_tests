@@ -71,3 +71,11 @@ Page names are written in CamelCase. Each page has 'P' as a postfix.
 ## Emails
 
 Tests use imaplib library and gmail account to handling incoming emails.
+
+
+# Fixtures
+
+There are two types of fixtures:
+- standard fixtures
+- requests fixtures     
+  todo
