@@ -15,6 +15,10 @@ class FilmShowDetailsP(TopMenuP):
 
     # reservation list
     TEXT_TABLE_HEADER_D = (By.XPATH, '//th[contains(text(), "{}")]')
+    HREF_RESERVATION_DETAILS_D = (By.XPATH,
+                                  '//td[contains(text(), "{person_name}")]//..//following-sibling::tr[1]//sup')
+    TEXT_RESERVATION_DETAILS_NAME_VALUE_D = (By.XPATH,
+                                             '//td[contains(text(), "{person_name}")]//..//following-sibling::tr[1]//div[@class="name" and contains(text(), "{name}")]//following-sibling::div[contains(text(), "{value}")]')
 
     def open_update_film_show_form(self):
         import pom.worker.pages.film_show.film_show_form as film_show_form
@@ -38,3 +42,28 @@ class FilmShowDetailsP(TopMenuP):
         :return: True or false
         """
         return message in self.get_text(self.TEXT_MESSAGE_S)
+
+    def open_reservation_details(self, person_name: str):
+        """
+        Opens reservation details for a particular client
+
+        :param person_name: person's name (has to be unique in show details)
+        :return: None
+        """
+
+        self.wait_and_click(self.dynamic_locator(self.HREF_RESERVATION_DETAILS_D, person_name=person_name))
+
+    def check_reservation_details(self, person_name: str, field_name: str, field_value: str) -> bool:
+        """
+        Checks reservation details. (checks if element exists)
+
+        :param person_name: person's name (has to be unique in show details)
+        :param field_name: field name (e.g. Email)
+        :param field_value: field value (e.g. test@example.com)
+        :return: True or False
+        """
+
+        return self.is_element_on_page(self.dynamic_locator(self.TEXT_RESERVATION_DETAILS_NAME_VALUE_D,
+                                                            person_name=person_name,
+                                                            name=field_name,
+                                                            value=field_value))
