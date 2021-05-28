@@ -21,10 +21,16 @@ are [here](https://docs.google.com/spreadsheets/d/1waFV-8ZkhgdNZUMMdUEsn7iaLLuMz
 
 ## Running tests
 
-In order to run tests it is required to set environmental variable `env` which chooses SUT's (System Under Test)
-environment. There are currently 2 environments - staging and production. In order to run tests against staging
-environment `env` variable should equal `staging`. To run tests against production environment `env` variable should
-equal `prod`. Environments' test configuration can be found in [config.ini](./config.ini) file.
+In order to run tests it is required to set environmental variables:
+
+- `env` variable which chooses SUT's (System Under Test) environment. There are currently 2 environments - staging and
+  production. In order to run tests against staging environment `env` variable should equal `staging`. To run tests
+  against production environment `env` variable should equal `prod`. Environments' test configuration can be found
+  in [config.ini](./config.ini) file.
+- `EMAIL_LOGIN` - login to an email account
+- `EMAIL_PASSWD` - password to an email account
+- `EMAIL_HOST` - mail IMAP host
+- `EMAIL_PORT` - IMAP port
 
 Tests can be run using `pytest` command.
 
@@ -42,7 +48,9 @@ run `pytest -n=<number of cpus>` command.
 
 ### Markers
 
-todo markers support
+This projects uses pytest's markers to mark tests. The following markers are available:
+
+- mail - used for marking tests which requires reading incoming emails
 
 # POM
 
@@ -58,4 +66,8 @@ Locators are written in UPPER_CASE. There are 2 types of locators in this projec
 
 ### Pages
 
-Page names are written in CamelCase. Each page has 'P' as a postfix. 
+Page names are written in CamelCase. Each page has 'P' as a postfix.
+
+## Emails
+
+Tests use imaplib library and gmail account to handling incoming emails.
