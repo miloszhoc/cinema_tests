@@ -21,13 +21,13 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
     number = '789456123'
     email = EMAIL_LOGIN
     seats = ['A1', 'C2']
-    page.type_name(name)
-    page.type_last_name(last_name)
-    page.type_email(email)
-    page.type_phone_number(number)
+    page._type_name(name)
+    page._type_last_name(last_name)
+    page._type_email(email)
+    page._type_phone_number(number)
     for seat in seats:
-        page.choose_seat(seat)
-    page = page.click_next_button()
+        page._choose_seat(seat)
+    page = page._click_next_button()
 
     assert page.check_summary('Seans', show_data['movie_title'])
     assert page.check_summary('Imię', name)
@@ -36,8 +36,8 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
     assert page.check_summary('Numer telefonu', number)
 
     for seat in seats:
-        page.choose_ticket_type(seat, ticket_type['name'])
-    page = page.click_next_button()
+        page._choose_ticket_type(seat, ticket_type['name'])
+    page = page._click_next_button()
 
     assert page.check_summary('Seans', show_data['movie_title'])
     assert page.check_summary('Imię', name)
@@ -53,10 +53,10 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
     for seat in seats:
         total_price += ticket_price
 
-    page.click_confirmation_email_checkbox()
+    page._click_confirmation_email_checkbox()
     assert page.check_total_price(str(total_price))
 
-    page = page.send_reservation()
+    page = page._send_reservation()
     assert page.check_message(
         'Rezerwacja została pomyślnie utworzona, na adres mailowy klienta została wysłana wiadomość z potwierdzeniem. Jeśli klient nie potwierdzi rezerwacji w ciągu 30 minut, to zostanie ona usunięta z systemu')
 

@@ -12,23 +12,32 @@ class ReservationAddForm1stTabP(TopMenuP):
     CHECKBOX_SEAT_D = (By.XPATH, '//label[contains(text(), "{}")]//input[@type="checkbox"]')
     BUTTON_NEXT_S = (By.XPATH, '//button[@value="Dalej"]')
 
-    def type_name(self, name: str) -> str:
+    def fill_out_first_tab(self, name: str, last_name: str, email: str, number: str, seat: str):
+        self._type_name(name)
+        self._type_last_name(last_name)
+        self._type_email(email)
+        self._type_phone_number(number)
+        self._choose_seat(seat)
+
+        return self._click_next_button()
+
+    def _type_name(self, name: str) -> str:
         self.wait_and_type(self.INPUT_NAME_S, name)
         return name
 
-    def type_last_name(self, last_name: str) -> str:
+    def _type_last_name(self, last_name: str) -> str:
         self.wait_and_type(self.INPUT_LAST_NAME_S, last_name)
         return last_name
 
-    def type_email(self, email: str) -> str:
+    def _type_email(self, email: str) -> str:
         self.wait_and_type(self.INPUT_EMAIL_S, email)
         return email
 
-    def type_phone_number(self, number: str) -> str:
+    def _type_phone_number(self, number: str) -> str:
         self.wait_and_type(self.INPUT_PHONE_S, number)
         return number
 
-    def choose_seat(self, seat: str) -> str:
+    def _choose_seat(self, seat: str) -> str:
         """
         Check seat.
 
@@ -38,7 +47,7 @@ class ReservationAddForm1stTabP(TopMenuP):
         self.wait_and_click(self.dynamic_locator(self.CHECKBOX_SEAT_D, seat))
         return seat
 
-    def click_next_button(self):
+    def _click_next_button(self):
         self.wait_and_click(self.BUTTON_NEXT_S)
         return ReservationAddForm2ndTabP(self.driver)
 
@@ -48,6 +57,10 @@ class ReservationAddForm2ndTabP(TopMenuP):
     BUTTON_NEXT_S = (By.XPATH, '//button[@value="Dalej"]')
     SELECT_TICKET_TYPE_D = (By.XPATH,
                             '//option[contains(text(), "{}") and @selected]/../../../following-sibling::div[contains(@id, "tickettype_id")]//select')
+
+    def fill_out_second_tab(self, seat_label: str, ticket_type_name: str):
+        self._choose_ticket_type(seat_label, ticket_type_name)
+        return self._click_next_button()
 
     def check_summary(self, label: str, value: str) -> bool:
         """
@@ -59,7 +72,7 @@ class ReservationAddForm2ndTabP(TopMenuP):
         """
         return self.is_element_on_page(self.dynamic_locator(self.TEXT_SUMMARY_D, label=label, value=value))
 
-    def choose_ticket_type(self, seat_label: str, ticket_type_name: str) -> dict:
+    def _choose_ticket_type(self, seat_label: str, ticket_type_name: str) -> dict:
         """
 
         Choose ticket type for a seat.
@@ -72,7 +85,7 @@ class ReservationAddForm2ndTabP(TopMenuP):
             *self.dynamic_locator(self.SELECT_TICKET_TYPE_D, seat_label))).select_by_visible_text(ticket_type_name)
         return {seat_label: ticket_type_name}
 
-    def click_next_button(self):
+    def _click_next_button(self):
         self.wait_and_click(self.BUTTON_NEXT_S)
         return ReservationAddForm3rdTabP(self.driver)
 
@@ -86,6 +99,16 @@ class ReservationAddForm3rdTabP(TopMenuP):
     TEXT_TICKET_TYPE_D = (By.XPATH,
                           '//div[@class="seat_name" and contains(text(), "{seat}")]//following-sibling::div[@class="ticket_type" and contains(text(), "{ticket}")]')
     TEXT_TOTAL_PRICE_S = (By.ID, 'total_price')
+
+    def fill_out_third_tab_send_reservation(self, is_paid: bool, is_confirmed: bool, confirmation_email: bool):
+        if is_paid:
+            self._click_paid_checkbox()
+        if is_confirmed:
+            self._click_confirmed_checkbox()
+        if confirmation_email:
+            self._click_confirmation_email_checkbox()
+
+        return self._send_reservation()
 
     def check_summary(self, label: str, value: str) -> bool:
         """
@@ -101,19 +124,19 @@ class ReservationAddForm3rdTabP(TopMenuP):
         return self.is_element_on_page(
             self.dynamic_locator(self.TEXT_TICKET_TYPE_D, seat=seat_label, ticket=ticket_type_name))
 
-    def click_paid_checkbox(self):
+    def _click_paid_checkbox(self):
         self.wait_and_click(self.CHECKBOX_PAID_S)
 
-    def click_confirmed_checkbox(self):
+    def _click_confirmed_checkbox(self):
         self.wait_and_click(self.CHECKBOX_CONFIRMED_S)
 
-    def click_confirmation_email_checkbox(self):
+    def _click_confirmation_email_checkbox(self):
         self.wait_and_click(self.CHECKBOX_CONFIRMATION_EMAIL_S)
 
     def check_total_price(self, total_price: str):
         return total_price.replace('.', ',') in self.get_text(self.TEXT_TOTAL_PRICE_S)
 
-    def send_reservation(self):
+    def _send_reservation(self):
         """
         Send reservation and redirect to film show details
 
