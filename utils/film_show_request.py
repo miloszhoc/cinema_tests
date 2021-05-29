@@ -14,7 +14,7 @@ class CreateFilmShow(CommonRequest):
         :param start_datetime: film screening start date (in format: 2021-05-18 22:37)
         :param initial_start_datetime: current datetime (in format: 2021-05-18 22:37:04)
         :param show_break: show break (in format: 00:15:00)
-        :return: True or raises exception
+        :return: film show id or raises exception
         """
 
         self._login()
@@ -31,8 +31,6 @@ class CreateFilmShow(CommonRequest):
                                                                        'show_break': show_break})
         self._close_session()
         if r.status_code == 200:
-            return True
+            return r.url.split('/')[-1]
         else:
             raise AssertionError('Can not create film show.')
-
-
