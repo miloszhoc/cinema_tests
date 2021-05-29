@@ -98,3 +98,23 @@ def test_add_reservation_taken_seat(create_film_show_with_reservation, login_log
     page = page.open_add_reservation_form()
     with pytest.raises(TimeoutException):
         page._choose_seat('B1')
+
+
+def test_add_reservation_confirm_paid_instantly(create_active_film_show, create_ticket_type, login_logout):
+    browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
+    show_data = create_active_film_show
+    ticket_type = create_ticket_type
+
+    page = ActiveFilmShowListP(browser).open_film_show_details(show_data['movie_title'])
+    page = page.open_add_reservation_form()
+    name = DateUtils().add_timestamp('John')
+    last_name = 'Test'
+    number = '789456123'
+    email = EMAIL_LOGIN
+    seat = 'A1'
+
+    page = page.fill_out_first_tab(name, last_name, email, number, seat)
+    page = page.fill_out_second_tab(seat, ticket_type['name'])
+    page = page.fill_out_third_tab_send_reservation(is_paid=True, is_confirmed=True, confirmation_email=False)
+    assert page.check_message(
+        'Rezerwacja została pomyślnie utworzona. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.')
