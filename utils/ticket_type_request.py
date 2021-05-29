@@ -14,7 +14,7 @@ class CreateTicketType(CommonRequest):
         :param price: price
         :param conditions: conditions
         :param deleted: is deleted
-        :return: True or raises exception
+        :return: ticket type id or raises exception
         """
         self._login()
         self.session.get(APP_URL + r'/worker/typy-biletow/')
@@ -29,6 +29,6 @@ class CreateTicketType(CommonRequest):
                                                                      'deleted': 'on' if deleted else ''})
         self._close_session()
         if r.status_code == 200:
-            return True
+            return r.url.split('/')[-1]
         else:
             raise AssertionError('Cann not create ticket type.')
