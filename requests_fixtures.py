@@ -3,8 +3,9 @@ Creating test data using requests
 
 """
 import pytest
-from env_data import IMG_FILE
+from env_data import IMG_FILE, EMAIL_LOGIN
 from utils.film_show_request import CreateFilmShow
+from utils.reservation_request import CreateReservation
 from utils.utils import DateUtils
 
 
@@ -21,8 +22,8 @@ def create_ticket_type():
             'price': price,
             'deleted': deleted,
             'description': description}
-    ticket.create_ticket_type(name, price, description, deleted)
-
+    ticket_type_id = ticket.create_ticket_type(name, price, description, deleted)
+    data['ticket_type_id'] = ticket_type_id
     return data
 
 
@@ -65,13 +66,13 @@ def create_active_film_show(create_movie):
     start_datetime = DateUtils.get_current_datetime(minutes=50)
     break_time = '00:05:00'
 
-    data = {'film_show': film_show,
-            'current_date': current_datetime,
+    data = {'current_date': current_datetime,
             'start_date': start_datetime,
             'break_time': break_time,
             'movie_title': create_movie['title']}
 
-    film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
+    film_show_id = film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
+    data['film_show_id'] = film_show_id
     return data
 
 
@@ -82,11 +83,41 @@ def create_archived_film_show(create_movie):
     start_datetime = DateUtils.get_current_datetime(minutes=-60)
     break_time = '00:05:00'
 
-    data = {'film_show': film_show,
-            'current_date': current_datetime,
+    data = {'current_date': current_datetime,
             'start_date': start_datetime,
             'break_time': break_time,
             'movie_title': create_movie['title']}
 
-    film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
+    film_show_id = film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
+    data['film_show_id'] = film_show_id
+    return data
+
+
+@pytest.fixture(scope='function')
+def create_film_show_with_reservation(create_active_film_show, create_ticket_type):
+    film_show = create_active_film_show
+    ticket_type = create_ticket_type
+
+    film_show_id = film_show['film_show_id']
+
+    first_name = DateUtils().add_timestamp('John')
+    last_name = 'Test'
+    email = EMAIL_LOGIN
+    phone_number = '456789123'
+    paid = False
+    confirmed = False
+    confirmation_email = False
+
+    data = {'first_name': first_name,
+            'last_name': last_name,
+            'email': email,
+            'phone_number': phone_number,
+            'paid': paid,
+            'confirmed': confirmed,
+            'confirmation_email': confirmation_email}
+
+    reservation = CreateReservation()
+    reservation.create_reservation(film_show_id, first_name, last_name, email, phone_number, paid, confirmed,
+                                   confirmation_email, ticket_type['ticket_type_id'], '7')
+
     return data
