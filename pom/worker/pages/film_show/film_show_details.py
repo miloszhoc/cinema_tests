@@ -27,6 +27,8 @@ class FilmShowDetailsP(TopMenuP):
                                            '//td[contains(text(), "{person_name}")]//following-sibling::td[@class="pay_confirm"]/a')
     HREF_DELETE_RESERVATION_FORM_D = (By.XPATH,
                                       '//td[contains(text(), "{person_name}")]//following-sibling::td[@class="delete_res"]/a')
+    HREF_UPDATE_RESERVATION_FORM_D = (By.XPATH,
+                                      '//td[contains(text(), "{person_name}")]//following-sibling::td[@class="edit"]/a')
 
     def open_update_film_show_form(self):
         import pom.worker.pages.film_show.film_show_form as film_show_form
@@ -99,3 +101,15 @@ class FilmShowDetailsP(TopMenuP):
 
         self.wait_and_click(self.dynamic_locator(self.HREF_DELETE_RESERVATION_FORM_D, person_name=person_name))
         return ReservationDeleteP(self.driver)
+
+    def open_update_reservation_page(self, person_name: str):
+        """
+        Opens form used to update reservation
+
+        :param person_name: person's name (has to be unique in show details)
+        :return: reservation update page
+        """
+        from pom.worker.pages.film_show.reservations.reservation_update_form import ReservationUpdateFormP
+
+        self.wait_and_click(self.dynamic_locator(self.HREF_UPDATE_RESERVATION_FORM_D, person_name=person_name))
+        return ReservationUpdateFormP(self.driver)
