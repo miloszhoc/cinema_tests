@@ -109,6 +109,7 @@ def create_film_show_with_reservation(create_active_film_show, create_ticket_typ
     confirmation_email = False
 
     data = {'movie_title': film_show['movie_title'],
+            'ticket_type_name': ticket_type['name'],
             'first_name': first_name,
             'last_name': last_name,
             'email': email,
