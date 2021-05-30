@@ -118,3 +118,6 @@ def test_add_reservation_confirm_paid_instantly(create_active_film_show, create_
     page = page.fill_out_third_tab_send_reservation(is_paid=True, is_confirmed=True, confirmation_email=False)
     assert page.check_message(
         'Rezerwacja została pomyślnie utworzona. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.')
+
+    assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
+    assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_PAID_D, person_name=name)) == 'Tak'

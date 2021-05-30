@@ -19,6 +19,10 @@ class FilmShowDetailsP(TopMenuP):
                                   '//td[contains(text(), "{person_name}")]//..//following-sibling::tr[1]//sup')
     TEXT_RESERVATION_DETAILS_NAME_VALUE_D = (By.XPATH,
                                              '//td[contains(text(), "{person_name}")]//..//following-sibling::tr[1]//div[@class="name" and contains(text(), "{name}")]//following-sibling::div[contains(text(), "{value}")]')
+    TEXT_RESERVATION_PAID_D = (By.XPATH,
+                               '//td[contains(text(), "{person_name}")]//following-sibling::td[@class="is_paid"]')
+    TEXT_RESERVATION_CONFIRMED_D = (By.XPATH,
+                                    '//td[contains(text(), "{person_name}")]//following-sibling::td[@class="is_confirmed"]')
 
     def open_update_film_show_form(self):
         import pom.worker.pages.film_show.film_show_form as film_show_form
