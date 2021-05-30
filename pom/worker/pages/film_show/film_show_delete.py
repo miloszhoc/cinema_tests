@@ -16,7 +16,7 @@ class FilmShowDeleteP(TopMenuP):
         """
         return title in self.get_text(self.TEXT_SECTION_HEADING_S)
 
-    def delete_movie(self):
+    def delete_film_show(self):
         """
         click "yes" button.
 
