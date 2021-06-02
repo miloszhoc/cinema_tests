@@ -1,10 +1,5 @@
 from selenium.webdriver.common.by import By
 from pom.base.manager import PageManager
-import pom.client.pages.about_page as about_page
-import pom.client.pages.contact_page as contact_page
-import pom.client.pages.main_page as main_page
-import pom.client.pages.price_list_page as price_list_page
-import pom.client.pages.repertoire_page as repertoire_page
 
 
 class TopMenuP(PageManager):
@@ -21,6 +16,8 @@ class TopMenuP(PageManager):
 
         :return: main page
         """
+        import pom.client.pages.main_page as main_page
+
         self.wait_and_click(self.HREF_MAIN_PAGE_S)
         return main_page.MainP(self.driver)
 
@@ -30,6 +27,8 @@ class TopMenuP(PageManager):
 
         :return: repertoire page
         """
+        import pom.client.pages.repertoire_page as repertoire_page
+
         self.wait_and_click(self.HREF_REPERTOIRE_PAGE_S)
         return repertoire_page.RepertoireP(self.driver)
 
@@ -39,6 +38,8 @@ class TopMenuP(PageManager):
 
         :return: price list page
         """
+        import pom.client.pages.price_list_page as price_list_page
+
         self.wait_and_click(self.HREF_PRICE_LIST_PAGE_S)
         return price_list_page.PriceListP(self.driver)
 
@@ -48,6 +49,8 @@ class TopMenuP(PageManager):
 
         :return: about page
         """
+        import pom.client.pages.about_page as about_page
+
         self.wait_and_click(self.HREF_ABOUT_PAGE_S)
         return about_page.AboutP(self.driver)
 
@@ -57,5 +60,15 @@ class TopMenuP(PageManager):
 
         :return: contact page
         """
+        import pom.client.pages.contact_page as contact_page
+
         self.wait_and_click(self.HREF_CONTACT_PAGE_S)
         return contact_page.ContactP(self.driver)
+
+    def get_page_title(self):
+        """
+        Get page title.
+
+        :return: page title
+        """
+        return self.get_text(self.TEXT_TAB_NAME_S)
