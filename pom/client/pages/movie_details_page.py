@@ -23,14 +23,14 @@ class MovieDetailsP(TopMenuP):
         """
         return self.get_text(self.dynamic_locator(self.TEXT_FIELD_VALUE_D, name=field_name))
 
-    def open_reservation_form(self, datetime: str):
+    def open_reservation_form(self, start_datetime: str):
         """
-        Opens reservation form for a showtime
+        Opens reservation form for the film show
 
-        :param datetime: datetime in DD-MM-YYYY HH:MM format
+        :param start_datetime: film show start datetime (in DD-MM-YYYY HH:MM format)
         :return: reservation form first tab page
         """
-        self.wait_and_click(self.dynamic_locator(self.BUTTON_RESERVATION_D, datetime=datetime))
+        self.wait_and_click(self.dynamic_locator(self.BUTTON_RESERVATION_D, datetime=start_datetime))
         return ReservationAddForm1stTabP(self.driver)
 
     def check_message(self, message: str) -> bool:
