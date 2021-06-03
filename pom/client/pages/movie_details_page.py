@@ -30,7 +30,11 @@ class MovieDetailsP(TopMenuP):
         :param start_datetime: film show start datetime (in DD-MM-YYYY HH:MM format)
         :return: reservation form first tab page
         """
-        self.wait_and_click(self.dynamic_locator(self.BUTTON_RESERVATION_D, datetime=start_datetime))
+        start_date, start_time = start_datetime.split(' ')
+        start_date = start_date.split('-')[2] + '.' + start_date.split('-')[1] + '.' + start_date.split('-')[0]
+        new_start_datetime = start_date + ' ' + start_time
+
+        self.wait_and_click(self.dynamic_locator(self.BUTTON_RESERVATION_D, datetime=new_start_datetime))
         return ReservationAddForm1stTabP(self.driver)
 
     def check_message(self, message: str) -> bool:
