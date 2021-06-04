@@ -11,6 +11,16 @@ class ReservationAddForm1stTabP(TopMenuP):
     INPUT_PHONE_S = (By.NAME, 'phone_number')
     CHECKBOX_SEAT_D = (By.XPATH, '//label[contains(text(), "{}")]//input[@type="checkbox"]')
     BUTTON_NEXT_S = (By.XPATH, '//button[@type="submit"]')
+    TEXT_MESSAGE_S = (By.CLASS_NAME, 'message')
+
+    def check_message(self, message: str) -> bool:
+        """
+        Checks message which appears on screen
+
+        :param message: message content
+        :return: True or false
+        """
+        return message in self.get_text(self.TEXT_MESSAGE_S)
 
     def fill_out_first_tab(self, name: str, last_name: str, email: str, number: str, seat: str):
         self._type_name(name)
