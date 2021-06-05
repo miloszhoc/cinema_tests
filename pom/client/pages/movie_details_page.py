@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-from pom.client.pages.reservation_form_page import ReservationAddForm1stTabP
+from pom.client.pages.reservation.reservation_form_page import ReservationAddForm1stTabP
 from pom.client.pages.top_menu import TopMenuP
 
 
