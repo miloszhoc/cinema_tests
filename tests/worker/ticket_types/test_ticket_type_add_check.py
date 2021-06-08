@@ -22,11 +22,11 @@ def test_add_ticket_type_and_check_details(login_logout, is_deleted):
     page = page.open_add_ticket_type_form().add_ticket_type(type_name, price, conditions, deleted)
 
     with pytest.assume:
-        assert page.check_url('typy-biletow')
+        assert page.check_url('szczegoly-typu')
 
     if is_deleted:
-        page = page.open_deleted_ticket_types_list()
-    page = page.open_ticket_type_details(type_name)
+        page = page.open_panel_page().open_module(
+            'Typy biletów').open_deleted_ticket_types_list().open_ticket_type_details(type_name)
 
     with pytest.assume:
         assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Typ', value=type_name))

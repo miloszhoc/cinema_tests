@@ -41,6 +41,6 @@ class TicketTypeAddFormP(TopMenuP):
         return True
 
     def _click_save_button(self):
-        import pom.worker.pages.ticket_types.list_page as list_page
+        import pom.worker.pages.ticket_types.ticket_type_details as ticket_type_details
         self.wait_and_click(self.BUTTON_SAVE_S)
-        return list_page.ActiveTicketTypesListP(self.driver)
+        return ticket_type_details.TicketTypeDetailsP(self.driver)
