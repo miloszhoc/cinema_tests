@@ -28,6 +28,24 @@ def create_ticket_type():
 
 
 @pytest.fixture(scope='function')
+def create_inactive_ticket_type():
+    from utils.ticket_type_request import CreateTicketType
+    ticket = CreateTicketType()
+
+    name = DateUtils.add_timestamp('deleted_ticket_type')
+    price = '50'
+    description = 'deleted type description'
+    deleted = True
+    data = {'name': name,
+            'price': price,
+            'deleted': deleted,
+            'description': description}
+    ticket_type_id = ticket.create_ticket_type(name, price, description, deleted)
+    data['ticket_type_id'] = ticket_type_id
+    return data
+
+
+@pytest.fixture(scope='function')
 def create_movie():
     from utils.movie_request import CreateMovie
     movie = CreateMovie()
@@ -69,7 +87,8 @@ def create_active_film_show(create_movie):
     data = {'current_date': current_datetime,
             'start_date': start_datetime,
             'break_time': break_time,
-            'movie_title': create_movie['title']}
+            'movie_title': create_movie['title'],
+            'movie_data': create_movie}
 
     film_show_id = film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
     data['film_show_id'] = film_show_id
@@ -86,7 +105,8 @@ def create_archived_film_show(create_movie):
     data = {'current_date': current_datetime,
             'start_date': start_datetime,
             'break_time': break_time,
-            'movie_title': create_movie['title']}
+            'movie_title': create_movie['title'],
+            'movie_data': create_movie}
 
     film_show_id = film_show.create_film_show(create_movie['movie_id'], start_datetime, current_datetime, break_time)
     data['film_show_id'] = film_show_id
