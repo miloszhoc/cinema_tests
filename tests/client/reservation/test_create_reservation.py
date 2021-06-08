@@ -43,8 +43,8 @@ def test_add_client_valid_reservation(create_active_film_show, create_ticket_typ
     assert page.check_total_price(str(ticket_price))
 
     page = page.send_reservation()
-    assert page.check_message(
-        'Rezerwacja została pomyślnie utworzona, na twój adres mailowy została wysłana wiadomość z potwierdzeniem. Jeśli nie potwierdzisz rezerwacji w ciągu 30 minut, to zostanie ona automatycznie usunięta z systemu. W przypadku braku otrzymania wiadomości email prosimy o pilny kontakt telefoniczny.')
+    assert 'Rezerwacja została pomyślnie utworzona, na twój adres mailowy została wysłana wiadomość z potwierdzeniem. Jeśli nie potwierdzisz rezerwacji w ciągu 30 minut, to zostanie ona automatycznie usunięta z systemu. W przypadku braku otrzymania wiadomości email prosimy o pilny kontakt telefoniczny.' \
+           in page.get_message()
 
     e = Email()
     email_content = e.wait_open_email('Potwierdzenie rezerwacji')
@@ -73,5 +73,5 @@ def test_add_client_invalid_reservation_more_than_10_seats(create_active_film_sh
     for seat in seats:
         page._choose_seat(seat)
     page._click_next_button()
-    assert page.check_message(
-        'Możesz zarezerwować maksymalnie 10 miejsc! W celu rezerwacji większej ilości miejsc skontaktuj się z pracownikiem kina.')
+    assert 'Możesz zarezerwować maksymalnie 10 miejsc! W celu rezerwacji większej ilości miejsc skontaktuj się z pracownikiem kina.' \
+           in page.get_message()

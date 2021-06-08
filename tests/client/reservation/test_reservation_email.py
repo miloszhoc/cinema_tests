@@ -32,8 +32,8 @@ def test_client_confirm_reservation(create_active_film_show, create_ticket_type,
     page = page.fill_out_second_tab(seat, ticket_type['name'])
 
     page = page.send_reservation()
-    assert page.check_message(
-        'Rezerwacja została pomyślnie utworzona, na twój adres mailowy została wysłana wiadomość z potwierdzeniem. Jeśli nie potwierdzisz rezerwacji w ciągu 30 minut, to zostanie ona automatycznie usunięta z systemu. W przypadku braku otrzymania wiadomości email prosimy o pilny kontakt telefoniczny.')
+    assert 'Rezerwacja została pomyślnie utworzona, na twój adres mailowy została wysłana wiadomość z potwierdzeniem. Jeśli nie potwierdzisz rezerwacji w ciągu 30 minut, to zostanie ona automatycznie usunięta z systemu. W przypadku braku otrzymania wiadomości email prosimy o pilny kontakt telefoniczny.' \
+           in page.get_message()
 
     e = Email()
     email_content = e.wait_open_email('Potwierdzenie rezerwacji')
@@ -43,7 +43,7 @@ def test_client_confirm_reservation(create_active_film_show, create_ticket_type,
     page = ConfirmationP(driver)
     page = page.confirm_reservation()
 
-    assert page.check_message('Rezerwacja została pomyślnie potwierdzona.')
+    assert 'Rezerwacja została pomyślnie potwierdzona.' in page.get_message()
 
     driver.get(APP_URL + '/worker/login/')
     page = LoginP(driver)
@@ -76,8 +76,8 @@ def test_client_reject_reservation(create_active_film_show, create_ticket_type, 
     page = page.fill_out_second_tab(seat, ticket_type['name'])
 
     page = page.send_reservation()
-    assert page.check_message(
-        'Rezerwacja została pomyślnie utworzona, na twój adres mailowy została wysłana wiadomość z potwierdzeniem. Jeśli nie potwierdzisz rezerwacji w ciągu 30 minut, to zostanie ona automatycznie usunięta z systemu. W przypadku braku otrzymania wiadomości email prosimy o pilny kontakt telefoniczny.')
+    assert 'Rezerwacja została pomyślnie utworzona, na twój adres mailowy została wysłana wiadomość z potwierdzeniem. Jeśli nie potwierdzisz rezerwacji w ciągu 30 minut, to zostanie ona automatycznie usunięta z systemu. W przypadku braku otrzymania wiadomości email prosimy o pilny kontakt telefoniczny.' \
+           in page.get_message()
 
     e = Email()
     email_content = e.wait_open_email('Potwierdzenie rezerwacji')
@@ -88,7 +88,7 @@ def test_client_reject_reservation(create_active_film_show, create_ticket_type, 
     page = RejectionP(driver)
     page = page.reject_reservation()
 
-    assert page.check_message('Rezerwacja została pomyślnie usunięta.')
+    assert 'Rezerwacja została pomyślnie usunięta.' in page.get_message()
 
     driver.get(APP_URL + '/worker/login/')
     page = LoginP(driver)

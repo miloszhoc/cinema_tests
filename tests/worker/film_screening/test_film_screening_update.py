@@ -17,4 +17,4 @@ def test_update_film_show(create_film_show_with_reservation, login_logout):
     email_content = e.wait_open_email('Aktualizacja seansu')
 
     assert data['movie_title'] in email_content
-    assert page.check_message('Seans został pomyślnie zaktualizowany. Wysłano wiadomiści z informacją do klientów.')
+    assert 'Seans został pomyślnie zaktualizowany. Wysłano wiadomiści z informacją do klientów.' in page.get_message()
