@@ -26,4 +26,4 @@ class PanelP(TopMenuP):
         elif module_name == 'Filmy':
             return movie_list.ActiveMoviesListP(self.driver)
         elif module_name == 'Typy biletów':
-            return ticket_list.TicketTypesListP(self.driver)
+            return ticket_list.ActiveTicketTypesListP(self.driver)

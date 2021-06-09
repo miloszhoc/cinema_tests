@@ -13,17 +13,13 @@ def test_update_ticket_type_and_check_details(login_logout):
     page = page.open_add_ticket_type_form().add_ticket_type(type_name, '12.30',
                                                             'test conditions', False)
 
-    page = page.open_ticket_type_details(type_name)
-
     updated_type_name = DateUtils.add_timestamp('test ticket type')
     updated_price = '19.99'
     updated_conditions = 'updated conditions'
     updated_deleted = False
 
-    page.open_update_ticket_type_form().add_ticket_type(updated_type_name, updated_price,
-                                                        updated_conditions, updated_deleted).open_ticket_type_details(
-        updated_type_name)
-
+    page = page.open_update_ticket_type_form().add_ticket_type(updated_type_name, updated_price,
+                                                               updated_conditions, updated_deleted)
     with pytest.assume:
         assert page.is_element_on_page(
             page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Typ', value=updated_type_name))
