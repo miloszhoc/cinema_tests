@@ -57,8 +57,8 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
     assert page.check_total_price(str(total_price))
 
     page = page._send_reservation()
-    assert page.check_message(
-        'Rezerwacja została pomyślnie utworzona, na adres mailowy klienta została wysłana wiadomość z potwierdzeniem. Jeśli klient nie potwierdzi rezerwacji w ciągu 30 minut, to zostanie ona usunięta z systemu')
+    assert 'Rezerwacja została pomyślnie utworzona, na adres mailowy klienta została wysłana wiadomość z potwierdzeniem. Jeśli klient nie potwierdzi rezerwacji w ciągu 30 minut, to zostanie ona usunięta z systemu' \
+           in page.get_message()
 
     e = Email()
     email_content = e.wait_open_email('Potwierdzenie rezerwacji')
@@ -116,8 +116,8 @@ def test_add_reservation_confirm_paid_instantly(create_active_film_show, create_
     page = page.fill_out_first_tab(name, last_name, email, number, seat)
     page = page.fill_out_second_tab(seat, ticket_type['name'])
     page = page.fill_out_third_tab_send_reservation(is_paid=True, is_confirmed=True, confirmation_email=False)
-    assert page.check_message(
-        'Rezerwacja została pomyślnie utworzona. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.')
+    assert 'Rezerwacja została pomyślnie utworzona. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.' \
+           in page.get_message()
 
     assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
     assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_PAID_D, person_name=name)) == 'Tak'

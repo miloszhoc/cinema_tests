@@ -13,14 +13,13 @@ class ReservationAddForm1stTabP(TopMenuP):
     BUTTON_NEXT_S = (By.XPATH, '//button[@type="submit"]')
     TEXT_MESSAGE_S = (By.CLASS_NAME, 'message')
 
-    def check_message(self, message: str) -> bool:
+    def get_message(self) -> str:
         """
-        Checks message which appears on screen
+        Get message which appears on screen
 
-        :param message: message content
-        :return: True or false
+        :return: message content
         """
-        return message in self.get_text(self.TEXT_MESSAGE_S)
+        return self.get_text(self.TEXT_MESSAGE_S)
 
     def fill_out_first_tab(self, name: str, last_name: str, email: str, number: str, seat: str):
         self._type_name(name)

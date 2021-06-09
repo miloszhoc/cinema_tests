@@ -44,8 +44,8 @@ def test_update_reservation_active_film_show(create_film_show_with_reservation, 
         with pytest.assume:
             assert page.check_reservation_details(first_name, 'Miejsce', data['ticket_type_name'])
 
-    page.check_message(
-        'Rezerwacja została pomyślnie zaktualizowana. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.')
+    assert 'Rezerwacja została pomyślnie zaktualizowana. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.' \
+           in page.get_message()
 
 
 def test_choose_taken_seat_in_update_reservation_form(create_film_show_with_reservation, login_logout):
