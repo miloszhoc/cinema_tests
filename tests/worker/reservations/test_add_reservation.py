@@ -61,7 +61,7 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
            in page.get_message()
 
     e = Email()
-    email_content = e.wait_open_email('Potwierdzenie rezerwacji')
+    email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
 
     assert '/potwierdz/' in email_content
     assert '/anuluj/' in email_content

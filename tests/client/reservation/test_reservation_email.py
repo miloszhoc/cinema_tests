@@ -36,7 +36,7 @@ def test_client_confirm_reservation(create_active_film_show, create_ticket_type,
            in page.get_message()
 
     e = Email()
-    email_content = e.wait_open_email('Potwierdzenie rezerwacji')
+    email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
     confirm_url = APP_URL + re.findall('/potwierdz.*', email_content)[0]
 
     driver.get(confirm_url)
@@ -80,7 +80,7 @@ def test_client_reject_reservation(create_active_film_show, create_ticket_type, 
            in page.get_message()
 
     e = Email()
-    email_content = e.wait_open_email('Potwierdzenie rezerwacji')
+    email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
     reject_url = APP_URL + re.findall('/anuluj.*', email_content)[0]
 
     driver.get(reject_url)
