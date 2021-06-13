@@ -32,11 +32,13 @@ def test_add_film_show_and_check_details(create_movie, login_logout):
     end_date = end_datetime.split(' ')[0]
     end_time = end_datetime.split(' ')[1]
     end_datetime = end_date + 'r. ' + end_time
-    total_time = start_datetime + ' - ' + end_datetime
 
     with pytest.assume:
         assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
-                                                            name='Data seansu', value=total_time))
+                                                            name='Data seansu', value=start_datetime))
+    with pytest.assume:
+        assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
+                                                            name='Data seansu', value=end_datetime))
     with pytest.assume:
         assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
                                                             name='Czas trwania', value=movie_data['duration']))
