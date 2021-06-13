@@ -86,7 +86,7 @@ def test_add_reservation_to_archive_film_show(create_archived_film_show, login_l
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     show_data = create_archived_film_show
 
-    page = ActiveFilmShowListP(browser).open_film_show_details(show_data['movie_title'])
+    page = ActiveFilmShowListP(browser).open_archive_film_show_list().open_film_show_details(show_data['movie_title'])
     with pytest.raises(TimeoutException):
         page.open_add_reservation_form()
 
