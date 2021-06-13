@@ -110,5 +110,5 @@ class FilmShowDetailsP(TopMenuP):
         """
         from pom.worker.pages.film_show.reservations.reservation_update_form import ReservationUpdateFormP
 
-        self.wait_and_click(self.dynamic_locator(self.HREF_UPDATE_RESERVATION_FORM_D, person_name=person_name))
+        self.wait_scroll_and_click(self.dynamic_locator(self.HREF_UPDATE_RESERVATION_FORM_D, person_name=person_name))
         return ReservationUpdateFormP(self.driver)
