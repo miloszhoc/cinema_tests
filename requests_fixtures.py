@@ -99,7 +99,7 @@ def create_active_film_show(create_movie):
 def create_archived_film_show(create_movie):
     film_show = CreateFilmShow()
     current_datetime = DateUtils.get_current_datetime()
-    start_datetime = DateUtils.get_current_datetime(minutes=-60)
+    start_datetime = DateUtils.get_current_datetime(minutes=-180)
     break_time = '00:05:00'
 
     data = {'current_date': current_datetime,
