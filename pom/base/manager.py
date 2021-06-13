@@ -50,6 +50,19 @@ class PageManager(object):
         element = self.driver.find_element(*locator)
         element.click()
 
+    def wait_scroll_and_click(self, locator: tuple, timeout: int = 20) -> None:
+        """
+        Waits for element to be clickable, then scroll and click on it
+
+        :param locator: locator to element.
+        :param timeout: timeout.
+        :return: None
+        """
+        self.driver.find_element(*locator).location_once_scrolled_into_view
+        self._wait_to_be_clickable(locator, timeout)
+        element = self.driver.find_element(*locator)
+        element.click()
+
     def wait_and_type(self, locator: tuple, text: str, timeout: int = 20) -> str:
         """
         Waits for element to be visible and type text.
