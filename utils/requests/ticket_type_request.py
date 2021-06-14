@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 
 from env_data import APP_URL
-from utils.common_request import CommonRequest
+from utils.requests.common_request import CommonRequest
 
 
 class CreateTicketType(CommonRequest):

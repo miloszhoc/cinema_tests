@@ -4,14 +4,14 @@ Creating test data using requests
 """
 import pytest
 from env_data import IMG_FILE, EMAIL_LOGIN
-from utils.film_show_request import CreateFilmShow
-from utils.reservation_request import CreateReservation
+from utils.requests.film_show_request import CreateFilmShow
+from utils.requests.reservation_request import CreateReservation
 from utils.utils import DateUtils
 
 
 @pytest.fixture(scope='function')
 def create_ticket_type():
-    from utils.ticket_type_request import CreateTicketType
+    from utils.requests.ticket_type_request import CreateTicketType
     ticket = CreateTicketType()
 
     name = DateUtils.add_timestamp('ticket_type')
@@ -29,7 +29,7 @@ def create_ticket_type():
 
 @pytest.fixture(scope='function')
 def create_inactive_ticket_type():
-    from utils.ticket_type_request import CreateTicketType
+    from utils.requests.ticket_type_request import CreateTicketType
     ticket = CreateTicketType()
 
     name = DateUtils.add_timestamp('deleted_ticket_type')
@@ -47,7 +47,7 @@ def create_inactive_ticket_type():
 
 @pytest.fixture(scope='function')
 def create_movie():
-    from utils.movie_request import CreateMovie
+    from utils.requests.movie_request import CreateMovie
     movie = CreateMovie()
 
     movie_title = DateUtils.add_timestamp('Test Movie')
