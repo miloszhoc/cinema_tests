@@ -59,6 +59,7 @@ def test_choose_taken_seat_in_update_reservation_form(create_film_show_with_rese
         page.select_seat_and_ticket_type(1, 'B1', data['ticket_type_name'])
 
 
+@pytest.mark.production
 def test_trigger_automatic_reservation_deletion():
     r = requests.get(APP_URL + '/worker/cron/usun-rezerwacje')
     assert r.status_code == 200
