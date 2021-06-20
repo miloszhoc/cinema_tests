@@ -25,7 +25,7 @@ In order to run tests it is required to set environmental variables:
 
 - `env` variable which chooses SUT's (System Under Test) environment. There are currently 2 environments - staging and
   production. In order to run tests against staging environment `env` variable should equal `staging`. To run tests
-  against production environment `env` variable should equal `prod`. Environments' test configuration can be found
+  against production environment `env` variable should equal `production`. Environments' test configuration can be found
   in [config.ini](./config.ini) file.
 
 Tests which uses mailing system requires setting IMAP connection. It can be done by setting the following environmental
