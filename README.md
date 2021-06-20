@@ -27,9 +27,13 @@ In order to run tests it is required to set environmental variables:
   production. In order to run tests against staging environment `env` variable should equal `staging`. To run tests
   against production environment `env` variable should equal `prod`. Environments' test configuration can be found
   in [config.ini](./config.ini) file.
+
+Tests which uses mailing system requires setting IMAP connection. It can be done by setting the following environmental
+variables.
+
 - `EMAIL_LOGIN` - login to an email account
 - `EMAIL_PASSWD` - password to an email account
-- `EMAIL_HOST` - mail IMAP host
+- `EMAIL_HOST` - IMAP host
 - `EMAIL_PORT` - IMAP port
 
 Tests can be run using `pytest` command.
@@ -48,7 +52,7 @@ run `pytest -n=<number of cpus>` command.
 
 ### Markers
 
-This projects uses pytest's markers to mark tests. The following markers are available:
+This project uses pytest's markers for choosing which tests needs to be run. The following markers are available:
 
 - mail - used for marking tests which requires reading incoming emails
 
@@ -72,10 +76,11 @@ Page names are written in CamelCase. Each page has 'P' as a postfix.
 
 Tests use imaplib library and gmail account to handling incoming emails.
 
+# Preconditions
 
-# Fixtures
+There are two types of fixtures in this project:
 
-There are two types of fixtures:
-- standard fixtures
-- requests fixtures     
-  todo
+- standard fixtures which starts web browser
+- requests fixtures which uses requests module (these kinds of locators does not require starting browser). Requests
+  fixtures are used mainly for creating test data.
+
