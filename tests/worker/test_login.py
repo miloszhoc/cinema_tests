@@ -3,6 +3,7 @@ from env_data import STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, ADMIN_LOG, ADMIN_PASS, W
 from pom.worker.pages.login_page import PreLoginP
 
 
+@pytest.mark.production
 def test_login_as_staff_admin(get_worker_module):
     driver = get_worker_module
     page = PreLoginP(driver)
@@ -20,6 +21,7 @@ def test_login_as_staff_admin(get_worker_module):
     page.logout()
 
 
+@pytest.mark.production
 def test_login_as_admin(get_worker_module):
     driver = get_worker_module
     page = PreLoginP(driver)
@@ -37,6 +39,7 @@ def test_login_as_admin(get_worker_module):
     page.logout()
 
 
+@pytest.mark.production
 def test_login_as_worker(get_worker_module):
     driver = get_worker_module
     page = PreLoginP(driver)
@@ -54,6 +57,7 @@ def test_login_as_worker(get_worker_module):
     page.logout()
 
 
+@pytest.mark.production
 def test_login_invalid_credentials(get_worker_module):
     driver = get_worker_module
     page = PreLoginP(driver)

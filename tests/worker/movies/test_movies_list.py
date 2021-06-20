@@ -1,8 +1,11 @@
+import pytest
+
 from env_data import STAFF_ADMIN_LOG, STAFF_ADMIN_PASS
 from pom.worker.pages.panel_page import PanelP
 from pom.worker.pages.movies.list_page import ActiveMoviesListP
 
 
+@pytest.mark.production
 def test_open_active_movies_list(login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/panel')
     page = PanelP(browser).open_module('Filmy')
@@ -13,6 +16,7 @@ def test_open_active_movies_list(login_logout):
     assert page.is_element_on_page(page.dynamic_locator(page.TEXT_TABLE_HEADER_D, 'Usunięty'))
 
 
+@pytest.mark.production
 def test_open_deleted_movies_list(login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/filmy')
     page = ActiveMoviesListP(browser).open_deleted_movies_list()

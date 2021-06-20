@@ -3,8 +3,8 @@ import os
 
 if os.environ.get('env') == 'staging':
     environment = 'staging'
-elif os.environ.get('env') == 'prod':
-    environment = 'prod'
+elif os.environ.get('env') == 'production':
+    environment = 'production'
 else:
     environment = None
 
