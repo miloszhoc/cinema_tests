@@ -38,6 +38,12 @@ variables.
 
 Tests can be run using `pytest` command.
 
+### Production tests
+
+Only tests which are marked as production can be run against production environment. These tests do not insert any data
+into database. To run this kind of tests user should set `env` variable to `production` and
+invoke `pytest -k production` command.
+
 ### Run with HTML report
 
 Test supports pytest-html reports. To run tests with report user should
@@ -55,6 +61,7 @@ run `pytest -n=<number of cpus>` command.
 This project uses pytest's markers for choosing which tests needs to be run. The following markers are available:
 
 - mail - used for marking tests which requires reading incoming emails
+- production - used for marking tests which can be run only against production environment
 
 # POM
 
