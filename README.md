@@ -84,3 +84,18 @@ There are two types of fixtures in this project:
 - requests fixtures which uses requests module (these kinds of locators does not require starting browser). Requests
   fixtures are used mainly for creating test data.
 
+# Files and folders
+
+Description of the most important files and folders in this project.
+
+* drivers - drivers for local tests execution,
+* pom - page object model's classes,
+* tests - test cases
+* utils - classes for handling emails, date operations, and creating test data with requests
+* config.ini - stores the most important variables (accounts credentials, Grid URL etc.)
+* conftest.py - pytest fixtures shared among all tests
+* driver.py - stores driver's configuration class and methods for updating driver's cookies
+* env_data.py - reads _config.ini_ file.
+* pytest.ini - file for customising pytest behaviour
+* requests_fixtures.py - fixtures which uses requests module
+* requirements.txt - packages required for running tests environment
