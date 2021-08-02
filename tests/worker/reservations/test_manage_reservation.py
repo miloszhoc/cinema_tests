@@ -10,9 +10,10 @@ def test_mark_reservation_as_paid_and_confirmed_in_active_film_show(create_film_
     data = create_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
-    page = page.open_pay_confirm_form(data['first_name']).mark_reservation(paid=True, confirmed=True)
-    assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_PAID_D, person_name=data['first_name'])) == 'Tak'
-    assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_CONFIRMED_D,
+    page = page.reservation_list.open_pay_confirm_form(data['first_name']).mark_reservation(paid=True, confirmed=True)
+    assert page.get_text(
+        page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_PAID_D, person_name=data['first_name'])) == 'Tak'
+    assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D,
                                               person_name=data['first_name'])) == 'Tak'
 
 
@@ -22,7 +23,7 @@ def test_update_reservation_active_film_show(create_film_show_with_reservation, 
     first_name = data['first_name']
 
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
-    page = page.open_update_reservation_page(data['first_name'])
+    page = page.reservation_list.open_update_reservation_page(data['first_name'])
 
     page.add_tickets('2')
 
@@ -34,15 +35,16 @@ def test_update_reservation_active_film_show(create_film_show_with_reservation, 
 
     page = page.click_send_update_form_button()
 
-    assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_PAID_D, person_name=data['first_name'])) == 'Tak'
-    assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_CONFIRMED_D,
+    assert page.get_text(
+        page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_PAID_D, person_name=data['first_name'])) == 'Tak'
+    assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D,
                                               person_name=data['first_name'])) == 'Tak'
 
     for seat in seats:
         with pytest.assume:
-            assert page.check_reservation_details(first_name, 'Miejsce', seat[1] + '' + seat[0])
+            assert page.reservation_list.check_reservation_details(first_name, 'Miejsce', seat[1] + '' + seat[0])
         with pytest.assume:
-            assert page.check_reservation_details(first_name, 'Miejsce', data['ticket_type_name'])
+            assert page.reservation_list.check_reservation_details(first_name, 'Miejsce', data['ticket_type_name'])
 
     assert 'Rezerwacja została pomyślnie zaktualizowana. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.' \
            in page.get_message()
@@ -53,7 +55,7 @@ def test_choose_taken_seat_in_update_reservation_form(create_film_show_with_rese
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
 
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
-    page = page.open_update_reservation_page(data['first_name'])
+    page = page.reservation_list.open_update_reservation_page(data['first_name'])
 
     with pytest.raises(NoSuchElementException):
         page.select_seat_and_ticket_type(1, 'B1', data['ticket_type_name'])

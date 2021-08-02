@@ -15,7 +15,7 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
     ticket_type = create_ticket_type
 
     page = ActiveFilmShowListP(browser).open_film_show_details(show_data['movie_title'])
-    page = page.open_add_reservation_form()
+    page = page.reservation_list.open_add_reservation_form()
     name = DateUtils().add_timestamp('John')
     last_name = 'Test'
     number = '789456123'
@@ -88,14 +88,14 @@ def test_add_reservation_to_archive_film_show(create_archived_film_show, login_l
 
     page = ActiveFilmShowListP(browser).open_archive_film_show_list().open_film_show_details(show_data['movie_title'])
     with pytest.raises(TimeoutException):
-        page.open_add_reservation_form()
+        page.reservation_list.open_add_reservation_form()
 
 
 def test_add_reservation_taken_seat(create_film_show_with_reservation, login_logout):
     data = create_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
-    page = page.open_add_reservation_form()
+    page = page.reservation_list.open_add_reservation_form()
     with pytest.raises(TimeoutException):
         page._choose_seat('B1')
 
@@ -106,7 +106,7 @@ def test_add_reservation_confirm_paid_instantly(create_active_film_show, create_
     ticket_type = create_ticket_type
 
     page = ActiveFilmShowListP(browser).open_film_show_details(show_data['movie_title'])
-    page = page.open_add_reservation_form()
+    page = page.reservation_list.open_add_reservation_form()
     name = DateUtils().add_timestamp('John')
     last_name = 'Test'
     number = '789456123'
@@ -119,5 +119,5 @@ def test_add_reservation_confirm_paid_instantly(create_active_film_show, create_
     assert 'Rezerwacja została pomyślnie utworzona. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.' \
            in page.get_message()
 
-    assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
-    assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_PAID_D, person_name=name)) == 'Tak'
+    assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
+    assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_PAID_D, person_name=name)) == 'Tak'

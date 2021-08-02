@@ -10,9 +10,9 @@ def test_delete_reservation_active_film_show(create_film_show_with_reservation, 
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
 
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
-    page = page.open_delete_reservation_page(data['first_name']).delete_reservation()
+    page = page.reservation_list.open_delete_reservation_page(data['first_name']).delete_reservation()
 
     assert 'Rezerwacja została pomyślnie usunięta.' in page.get_message()
 
     with pytest.raises(TimeoutException):
-        page.open_reservation_details(data['first_name'])
+        page.reservation_list.open_reservation_details(data['first_name'])
