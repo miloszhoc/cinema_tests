@@ -44,4 +44,4 @@ def test_add_film_show_and_check_details(create_movie, login_logout):
                                                             name='Czas trwania', value=movie_data['duration']))
 
     with pytest.assume:
-        assert page.is_element_on_page(page.HREF_ADD_RESERVATION_S)
+        assert page.is_element_on_page(page.reservation_list.HREF_ADD_RESERVATION_S)

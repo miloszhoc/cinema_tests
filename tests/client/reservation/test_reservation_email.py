@@ -53,7 +53,7 @@ def test_client_confirm_reservation(create_active_film_show, create_ticket_type,
     from pom.worker.pages.film_show.film_show_details import FilmShowDetailsP
 
     page = FilmShowDetailsP(driver)
-    assert page.get_text(page.dynamic_locator(page.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
+    assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
 
 
 @pytest.mark.email
@@ -99,4 +99,4 @@ def test_client_reject_reservation(create_active_film_show, create_ticket_type, 
 
     page = FilmShowDetailsP(driver)
     with pytest.raises(TimeoutException):
-        page.open_reservation_details(name)
+        page.reservation_list.open_reservation_details(name)
