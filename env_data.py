@@ -12,10 +12,18 @@ try:
     config = configparser.ConfigParser()
     config.read('config.ini')
 
+    # IMAP connection
     EMAIL_LOGIN = os.environ.get('email_login')
     EMAIL_PASSWD = os.environ.get('email_passwd')
     EMAIL_HOST = os.environ.get('email_host')
     EMAIL_PORT = os.environ.get('email_port')
+
+    # database connection
+    DB_NAME = os.environ.get('db_name')
+    USER = os.environ.get('db_user')
+    PASSWORD = os.environ.get('db_password')
+    HOST = os.environ.get('db_host')
+    PORT = os.environ.get('db_port')
 
     SELENIUM_HUB_URL = config['global']['SELENIUM_HUB_URL']
     APP_URL = config[environment]['APP_URL']
