@@ -20,10 +20,10 @@ try:
 
     # database connection
     DB_NAME = os.environ.get('db_name')
-    USER = os.environ.get('db_user')
-    PASSWORD = os.environ.get('db_password')
-    HOST = os.environ.get('db_host')
-    PORT = os.environ.get('db_port')
+    DB_USER = os.environ.get('db_user')
+    DB_PASSWORD = os.environ.get('db_password')
+    DB_HOST = os.environ.get('db_host')
+    DB_PORT = os.environ.get('db_port')
 
     SELENIUM_HUB_URL = config['global']['SELENIUM_HUB_URL']
     APP_URL = config[environment]['APP_URL']
