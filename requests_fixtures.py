@@ -4,9 +4,11 @@ Creating test data using requests
 """
 import pytest
 from env_data import IMG_FILE, EMAIL_LOGIN
+from sql.sql_executor import execute_sql
 from utils.requests.film_show_request import CreateFilmShow
 from utils.requests.reservation_request import CreateReservation
 from utils.utils import DateUtils
+from sql import tickettype_sql
 
 
 @pytest.fixture(scope='function')
@@ -24,7 +26,8 @@ def create_ticket_type():
             'description': description}
     ticket_type_id = ticket.create_ticket_type(name, price, description, deleted)
     data['ticket_type_id'] = ticket_type_id
-    return data
+    yield data
+    execute_sql(tickettype_sql.DELETE_TICKETTYPE.format(data['ticket_type_id']))
 
 
 @pytest.fixture(scope='function')
