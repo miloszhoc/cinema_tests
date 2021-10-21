@@ -31,17 +31,26 @@ In order to run tests it is required to set environmental variables:
 Tests which uses mailing system requires setting IMAP connection. It can be done by setting the following environmental
 variables.
 
-- `EMAIL_LOGIN` - login to an email account
-- `EMAIL_PASSWD` - password to an email account
-- `EMAIL_HOST` - IMAP host
-- `EMAIL_PORT` - IMAP port
+- `email_login` - login to an email account
+- `email_passwd` - password to an email account
+- `email_host` - IMAP host
+- `email_port` - IMAP port
+
+Tests which uses SQL queries requires establishing database connection. It can be done by setting the following
+environmental variables.
+
+- `db_name` - database name
+- `db_user` - database user login
+- `db_password` - database password
+- `db_host` - database host
+- `db_port` - database port
 
 Tests can be run using `pytest` command.
 
 ### Production tests
 
-Only tests which are marked as production can be run against production environment. These tests do not insert any data
-into database. To run this kind of tests user should set `env` variable to `production` and
+Only tests which are marked as production should be run against production environment. These tests do not insert any
+data into database. To run this kind of tests user should set `env` variable to `production` and
 invoke `pytest -k production` command.
 
 ### Run with HTML report
@@ -97,6 +106,7 @@ Description of the most important files and folders in this project.
 
 * drivers - drivers for local tests execution,
 * pom - page object model's classes,
+* sql - SQL queries and execution function
 * tests - test cases
 * utils - classes for handling emails, date operations, and creating test data with requests
 * config.ini - stores the most important variables (accounts credentials, Grid URL etc.)
