@@ -97,7 +97,7 @@ Tests use imaplib library and gmail account to handling incoming emails.
 There are two types of fixtures in this project:
 
 - standard fixtures which starts web browser
-- requests fixtures which uses requests module (these kinds of fixtures does not require starting browser). Requests
+- requests fixtures which uses requests module (these kinds of fixtures do not require starting browser). Requests
   fixtures are used mainly for creating test data.
 
 # Files and folders
