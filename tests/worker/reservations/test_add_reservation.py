@@ -91,8 +91,8 @@ def test_add_reservation_to_archive_film_show(create_archived_film_show, login_l
         page.open_add_reservation_form()
 
 
-def test_add_reservation_taken_seat(create_film_show_with_reservation, login_logout):
-    data = create_film_show_with_reservation
+def test_add_reservation_taken_seat(delete_film_show_with_reservation, login_logout):
+    data = delete_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
     page = page.open_add_reservation_form()

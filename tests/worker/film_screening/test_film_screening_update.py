@@ -6,8 +6,8 @@ from utils.mail import Email
 
 
 @pytest.mark.email
-def test_update_film_show(create_film_show_with_reservation, login_logout):
-    data = create_film_show_with_reservation
+def test_update_film_show(delete_film_show_with_reservation, login_logout):
+    data = delete_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
 
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])

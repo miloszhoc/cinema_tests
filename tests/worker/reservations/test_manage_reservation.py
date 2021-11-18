@@ -6,8 +6,8 @@ from env_data import STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, APP_URL
 from pom.worker.pages.film_show.list_page import ActiveFilmShowListP
 
 
-def test_mark_reservation_as_paid_and_confirmed_in_active_film_show(create_film_show_with_reservation, login_logout):
-    data = create_film_show_with_reservation
+def test_mark_reservation_as_paid_and_confirmed_in_active_film_show(delete_film_show_with_reservation, login_logout):
+    data = delete_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
     page = page.open_pay_confirm_form(data['first_name']).mark_reservation(paid=True, confirmed=True)
@@ -48,8 +48,8 @@ def test_update_reservation_active_film_show(create_film_show_with_reservation, 
            in page.get_message()
 
 
-def test_choose_taken_seat_in_update_reservation_form(create_film_show_with_reservation, login_logout):
-    data = create_film_show_with_reservation
+def test_choose_taken_seat_in_update_reservation_form(delete_film_show_with_reservation, login_logout):
+    data = delete_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
 
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
