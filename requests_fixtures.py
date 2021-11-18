@@ -4,11 +4,11 @@ Creating test data using requests
 """
 import pytest
 from env_data import IMG_FILE, EMAIL_LOGIN
+from sql.sql_queries import *
 from sql.sql_executor import execute_sql
 from utils.requests.film_show_request import CreateFilmShow
 from utils.requests.reservation_request import CreateReservation
 from utils.utils import DateUtils
-from sql import tickettype_sql
 
 
 @pytest.fixture(scope='function')
@@ -26,8 +26,7 @@ def create_ticket_type():
             'description': description}
     ticket_type_id = ticket.create_ticket_type(name, price, description, deleted)
     data['ticket_type_id'] = ticket_type_id
-    yield data
-    execute_sql(tickettype_sql.DELETE_TICKETTYPE.format(data['ticket_type_id']))
+    return data
 
 
 @pytest.fixture(scope='function')
@@ -133,6 +132,8 @@ def create_film_show_with_reservation(create_active_film_show, create_ticket_typ
 
     data = {'movie_title': film_show['movie_title'],
             'ticket_type_name': ticket_type['name'],
+            'ticket_type_data': ticket_type,
+            'film_show_data': film_show,
             'first_name': first_name,
             'last_name': last_name,
             'email': email,
@@ -145,4 +146,26 @@ def create_film_show_with_reservation(create_active_film_show, create_ticket_typ
     reservation.create_reservation(film_show_id, first_name, last_name, email, phone_number, paid, confirmed,
                                    confirmation_email, ticket_type['ticket_type_id'], '7')
 
-    return data
+    yield data
+
+
+@pytest.fixture(scope='function')
+def delete_film_show_with_reservation(create_film_show_with_reservation):
+    data = create_film_show_with_reservation
+
+    yield data
+
+    reservation_id, client_id, ticket_id, showtime_id, wrti_id = execute_sql('''
+    SELECT wr.reservation_id, wr.client_id_id, wrti.ticket_id, wr.showtime_id_id, wrti.id
+FROM worker_reservation AS wr
+         JOIN worker_reservation_ticket_id AS wrti ON wr.reservation_id = wrti.reservation_id
+         JOIN worker_ticket AS wt ON wrti.ticket_id = wt.ticket_id
+WHERE wr.showtime_id_id = {};'''.format(data['film_show_data']['film_show_id']))
+
+    execute_sql(DELETE_RESERVATION_TICKET.format(wrti_id))
+    execute_sql(DELETE_TICKET.format(ticket_id))
+    execute_sql(DELETE_RESERVATION.format(reservation_id))
+    execute_sql(DELETE_FILM_SHOW.format(showtime_id))
+    execute_sql(DELETE_TICKETTYPE.format(data['ticket_type_data']['ticket_type_id']))
+    execute_sql(DELETE_CLIENT.format(client_id))
+    execute_sql(DELETE_MOVIE.format(data['film_show_data']['movie_data']['movie_id']))
