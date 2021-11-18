@@ -67,6 +67,7 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
     assert '/anuluj/' in email_content
 
     full_name = name + ' ' + last_name
+    page = page.reservation_list
     page.open_reservation_details(full_name)
 
     for seat in seats:
