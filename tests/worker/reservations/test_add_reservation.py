@@ -67,6 +67,7 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
     assert '/anuluj/' in email_content
 
     full_name = name + ' ' + last_name
+    page = page.reservation_list
     page.open_reservation_details(full_name)
 
     for seat in seats:
@@ -91,8 +92,8 @@ def test_add_reservation_to_archive_film_show(create_archived_film_show, login_l
         page.reservation_list.open_add_reservation_form()
 
 
-def test_add_reservation_taken_seat(create_film_show_with_reservation, login_logout):
-    data = create_film_show_with_reservation
+def test_add_reservation_taken_seat(delete_film_show_with_reservation, login_logout):
+    data = delete_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
     page = page.reservation_list.open_add_reservation_form()
