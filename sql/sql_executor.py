@@ -15,6 +15,8 @@ def execute_sql(sql: str):
                           host=DB_HOST,
                           port=DB_PORT) as conn:
         with conn.cursor() as curs:
-            print(sql)
             curs.execute(sql)
-            return True
+            try:
+                return curs.fetchone()
+            except psycopg2.ProgrammingError:
+                return True
