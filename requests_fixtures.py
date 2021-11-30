@@ -155,12 +155,8 @@ def delete_film_show_with_reservation(create_film_show_with_reservation):
 
     yield data
 
-    reservation_id, client_id, ticket_id, showtime_id, wrti_id = execute_sql('''
-    SELECT wr.reservation_id, wr.client_id_id, wrti.ticket_id, wr.showtime_id_id, wrti.id
-FROM worker_reservation AS wr
-         JOIN worker_reservation_ticket_id AS wrti ON wr.reservation_id = wrti.reservation_id
-         JOIN worker_ticket AS wt ON wrti.ticket_id = wt.ticket_id
-WHERE wr.showtime_id_id = {};'''.format(data['film_show_data']['film_show_id']))
+    reservation_id, client_id, ticket_id, showtime_id, wrti_id = execute_sql(
+        SELECT_IDS.format(data['film_show_data']['film_show_id']))
 
     execute_sql(DELETE_RESERVATION_TICKET.format(wrti_id))
     execute_sql(DELETE_TICKET.format(ticket_id))
