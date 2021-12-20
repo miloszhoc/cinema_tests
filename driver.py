@@ -1,14 +1,11 @@
 import requests
 from requests import Session
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from env_data import SELENIUM_HUB_URL
 
 
 class CreateDriver():
-    CHROME = {
-        "browserName": "chrome",
-        "javascriptEnabled": True,
-    }
 
     def __init__(self):
         self._browser = None
@@ -34,19 +31,20 @@ class CreateDriver():
 
         if self._browser == 'chrome':
             options = webdriver.ChromeOptions()
-            options.add_argument('--window-size=1920,1080')
+            options.set_capability("browserName", "chrome")
+            options.set_capability("javascriptEnabled", True)
 
             if args:
                 for argument in args:
                     options.add_argument(argument)
 
-            self.CHROME.update(options.to_capabilities())
+            service = Service(executable_path=driver_path)
 
             if env == 'local':
-                self._driver = webdriver.Chrome(executable_path=driver_path, desired_capabilities=self.CHROME, **kwargs)
+                self._driver = webdriver.Chrome(service=service, **kwargs, options=options)
             elif env == 'remote':
-                self._driver = webdriver.Remote(command_executor=SELENIUM_HUB_URL,
-                                                desired_capabilities=self.CHROME)
+                self._driver = webdriver.Remote(command_executor=SELENIUM_HUB_URL, options=options)
+        self._driver.set_window_size(1920, 1080)
         self._driver.set_page_load_timeout(60)
 
     def get_current_driver(self) -> webdriver.Chrome:
