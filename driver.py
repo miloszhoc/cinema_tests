@@ -43,7 +43,7 @@ class CreateDriver():
             if env == 'local':
                 self._driver = webdriver.Chrome(service=service, **kwargs, options=options)
             elif env == 'remote':
-                self._driver = webdriver.Remote(service=service, command_executor=SELENIUM_HUB_URL, options=options)
+                self._driver = webdriver.Remote(command_executor=SELENIUM_HUB_URL, options=options)
         self._driver.set_window_size(1920, 1080)
         self._driver.set_page_load_timeout(60)
 
