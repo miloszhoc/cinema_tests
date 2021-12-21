@@ -1,3 +1,5 @@
+allure-pytest==2.9.45
+allure-python-commons==2.9.45
 apipkg==1.5
 async-generator==1.10
 atomicwrites==1.4.0
