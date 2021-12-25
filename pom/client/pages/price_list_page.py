@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-
+from pom.base.checks import Assertions
 from pom.client.pages.top_menu import TopMenuP
 
 
@@ -27,9 +27,9 @@ class PriceListP(TopMenuP):
         :param type_price: ticket type price
         :return: True or false
         """
-        return self.is_element_on_page(self.dynamic_locator(self.TEXT_TABLE_ROW_TICKET_DATA_D,
-                                                            type_name=type_name,
-                                                            price=type_price))
+        return Assertions.is_element_on_page(self.driver, self.dynamic_locator(self.TEXT_TABLE_ROW_TICKET_DATA_D,
+                                                                               type_name=type_name,
+                                                                               price=type_price))
 
     def check_ticket_type_details(self, type_name: str, type_description: str) -> bool:
         """
@@ -40,4 +40,5 @@ class PriceListP(TopMenuP):
         :return: True or false
         """
         full_description = type_name + ' - ' + type_description
-        return self.is_element_on_page(self.dynamic_locator(self.TEXT_TICKET_TYPE_DESCRIPTION_D, full_description))
+        return Assertions.is_element_on_page(self.driver, self.dynamic_locator(self.TEXT_TICKET_TYPE_DESCRIPTION_D,
+                                                                               full_description))

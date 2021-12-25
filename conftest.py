@@ -5,6 +5,8 @@ from driver import CreateDriver
 pytest_plugins = ('requests_fixtures',)
 
 
+# todo POM nie powinien zwracać true/false, tylko dane ze strony, takie sprawdzenia powinny byc w testach (do zmiany funkcje i docstring)
+# todo sprawdzenia nie pwinny być w klasie managera. Zrobic nowa klase na sprawdzenia (np. is_element_on_page)
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     pytest_html = item.config.pluginmanager.getplugin("html")
@@ -30,9 +32,9 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture(scope='function')
 def setup_browser():
     driver = CreateDriver()
-    # driver.set_driver('chrome', 'local', './drivers/chromedriver.exe', '--headless')
+    driver.set_driver('chrome', 'local', './drivers/chromedriver.exe', '--headless')
     # driver.set_driver('chrome', 'local', './drivers/chromedriver.exe')
-    driver.set_driver('chrome', 'remote')
+    # driver.set_driver('chrome', 'remote')
     browser = driver.get_current_driver()
 
     yield browser

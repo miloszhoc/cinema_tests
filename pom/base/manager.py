@@ -2,7 +2,6 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 import selenium.webdriver.support.expected_conditions as ec
-import selenium.common.exceptions as se
 
 
 class PageManager(object):
@@ -97,29 +96,6 @@ class PageManager(object):
         :return: Element's text.
         """
         return self.driver.find_element(*locator).text.strip()
-
-    def is_element_on_page(self, locator: tuple) -> bool:
-        """
-        Returns True if element is on page in other case returns False.
-
-        :param locator: locator to element
-        :return: True or False
-        """
-        try:
-            self.driver.find_element(*locator)
-        except se.NoSuchElementException:
-            return False
-        else:
-            return True
-
-    def check_url(self, expected: str) -> bool:
-        """
-        Check if user is on expected page.
-
-        :param expected: expected part of url
-        :return: True or False
-        """
-        return expected in self.driver.current_url
 
     def get_element_attr(self, element_locator: tuple, attr_name: str):
         """
