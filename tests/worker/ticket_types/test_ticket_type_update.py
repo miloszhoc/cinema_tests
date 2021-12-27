@@ -1,6 +1,7 @@
 import pytest
 
 from env_data import STAFF_ADMIN_LOG, STAFF_ADMIN_PASS
+from pom.base.checks import Assertions
 from pom.worker.pages.ticket_types.list_page import ActiveTicketTypesListP
 from utils.utils import DateUtils
 
@@ -21,11 +22,12 @@ def test_update_ticket_type_and_check_details(login_logout):
     page = page.open_update_ticket_type_form().add_ticket_type(updated_type_name, updated_price,
                                                                updated_conditions, updated_deleted)
     with pytest.assume:
-        assert page.is_element_on_page(
-            page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Typ', value=updated_type_name))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Typ',
+                                                                           value=updated_type_name))
     with pytest.assume:
-        assert page.is_element_on_page(
-            page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Cena', value=updated_price.replace('.', ',')))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Cena',
+                                                                           value=updated_price.replace('.', ',')))
     with pytest.assume:
-        assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
-                                                            name='Dodatkowe informacje', value=updated_conditions))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
+                                                                           name='Dodatkowe informacje',
+                                                                           value=updated_conditions))

@@ -1,3 +1,4 @@
+from pom.base.checks import Assertions
 from pom.base.manager import PageManager
 from selenium.webdriver.common.by import By
 from pom.worker.pages.film_show.reservations.reservation_form import ReservationAddForm1stTabP
@@ -45,10 +46,11 @@ class ReservationListP(PageManager):
         :return: True or False
         """
 
-        return self.is_element_on_page(self.dynamic_locator(self.TEXT_RESERVATION_DETAILS_NAME_VALUE_D,
-                                                            person_name=person_name,
-                                                            name=field_name,
-                                                            value=field_value))
+        return Assertions.is_element_on_page(self.driver,
+                                             self.dynamic_locator(self.TEXT_RESERVATION_DETAILS_NAME_VALUE_D,
+                                                                  person_name=person_name,
+                                                                  name=field_name,
+                                                                  value=field_value))
 
     def open_pay_confirm_form(self, person_name: str):
         """

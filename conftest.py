@@ -30,9 +30,9 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture(scope='function')
 def setup_browser():
     driver = CreateDriver()
-    # driver.set_driver('chrome', 'local', './drivers/chromedriver.exe', '--headless')
+    driver.set_driver('chrome', 'local', './drivers/chromedriver.exe', '--headless')
     # driver.set_driver('chrome', 'local', './drivers/chromedriver.exe')
-    driver.set_driver('chrome', 'remote')
+    # driver.set_driver('chrome', 'remote')
     browser = driver.get_current_driver()
 
     yield browser

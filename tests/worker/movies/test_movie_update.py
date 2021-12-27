@@ -3,6 +3,7 @@ import os
 import pytest
 
 from env_data import STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, IMG_FILE
+from pom.base.checks import Assertions
 from pom.worker.pages.movies.list_page import ActiveMoviesListP
 from utils.utils import DateUtils
 
@@ -19,7 +20,7 @@ def test_update_movie_and_check_details(login_logout):
                                                 IMG_FILE, 'dQw4w9WgXcQ', False, '1:15:00')
 
     with pytest.assume:
-        assert page.check_url('szczegoly-filmu')
+        assert Assertions.check_url(browser, 'szczegoly-filmu')
 
     updated_title = DateUtils.add_timestamp('test movie')
     updated_director = 'updated director'
@@ -35,20 +36,21 @@ def test_update_movie_and_check_details(login_logout):
                                                    updated_thumbnail_file_path, updated_youtube_id, updated_deleted,
                                                    updated_duration)
     with pytest.assume:
-        assert page.is_element_on_page(
-            page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Tytuł', value=updated_title))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Tytuł',
+                                                                           value=updated_title))
     with pytest.assume:
-        assert page.is_element_on_page(
-            page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Reżyser', value=updated_director))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Reżyser',
+                                                                           value=updated_director))
     with pytest.assume:
-        assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
-                                                            name='Data premiery', value=updated_release_year))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
+                                                                           name='Data premiery',
+                                                                           value=updated_release_year))
     with pytest.assume:
-        assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
-                                                            name='Czas trwania', value=updated_duration))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
+                                                                           name='Czas trwania', value=updated_duration))
     with pytest.assume:
-        assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
-                                                            name='Opis', value=updated_description))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
+                                                                           name='Opis', value=updated_description))
     with pytest.assume:
         assert updated_youtube_id in page.get_element_attr(page.FRAME_YT_S, 'src')
     with pytest.assume:
