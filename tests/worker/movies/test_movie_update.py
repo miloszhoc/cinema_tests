@@ -9,7 +9,7 @@ from utils.utils import DateUtils
 
 
 # todo - DRY, create movie with request
-def test_update_movie_and_check_details(login_logout):
+def test_c50_update_movie_and_check_details(login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/filmy')
     page = ActiveMoviesListP(browser)
 

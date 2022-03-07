@@ -6,7 +6,7 @@ from env_data import STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, APP_URL
 from pom.worker.pages.film_show.list_page import ActiveFilmShowListP
 
 
-def test_mark_reservation_as_paid_and_confirmed_in_active_film_show(delete_film_show_with_reservation, login_logout):
+def test_c40_mark_reservation_as_paid_and_confirmed_in_active_film_show(delete_film_show_with_reservation, login_logout):
     data = delete_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
@@ -17,7 +17,7 @@ def test_mark_reservation_as_paid_and_confirmed_in_active_film_show(delete_film_
                                               person_name=data['first_name'])) == 'Tak'
 
 
-def test_update_reservation_active_film_show(create_film_show_with_reservation, login_logout):
+def test_c35_update_reservation_active_film_show(create_film_show_with_reservation, login_logout):
     data = create_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     first_name = data['first_name']
@@ -50,7 +50,7 @@ def test_update_reservation_active_film_show(create_film_show_with_reservation, 
            in page.get_message()
 
 
-def test_choose_taken_seat_in_update_reservation_form(delete_film_show_with_reservation, login_logout):
+def test_c38_choose_taken_seat_in_update_reservation_form(delete_film_show_with_reservation, login_logout):
     data = delete_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
 
@@ -62,7 +62,7 @@ def test_choose_taken_seat_in_update_reservation_form(delete_film_show_with_rese
 
 
 @pytest.mark.production
-def test_trigger_automatic_reservation_deletion():
+def test_c45_trigger_automatic_reservation_deletion():
     r = requests.get(APP_URL + '/worker/cron/usun-rezerwacje')
     assert r.status_code == 200
     keys = r.json().keys()

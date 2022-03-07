@@ -8,7 +8,7 @@ from utils.utils import DateUtils
 
 
 @pytest.mark.parametrize('is_deleted', [True, False])
-def test_add_movie_and_check_details(login_logout, is_deleted):
+def test_c48_add_movie_and_check_details(login_logout, is_deleted):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/filmy')
     page = ActiveMoviesListP(browser)
 

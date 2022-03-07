@@ -7,7 +7,7 @@ from utils.utils import DateUtils
 
 
 @pytest.mark.parametrize('is_deleted', [True, False])
-def test_add_ticket_type_and_check_details(login_logout, is_deleted):
+def test_c58_add_ticket_type_and_check_details(login_logout, is_deleted):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/typy-biletow')
     page = ActiveTicketTypesListP(browser)
 
