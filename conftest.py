@@ -1,8 +1,14 @@
 import pytest
 from env_data import APP_URL
 from driver import CreateDriver
+from utils.testlink import TestLinkReport
 
 pytest_plugins = ('requests_fixtures',)
+
+
+def pytest_addoption(parser):
+    parser.addoption("--testplan", action="store", default="")
+    parser.addoption("--build", action="store", default="")
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -12,7 +18,20 @@ def pytest_runtest_makereport(item, call):
     report = outcome.get_result()
     extra = getattr(report, "extra", [])
     if report.when == "call":
-        # always add url to report
+
+        # get test case id from test name and convert it into testlink format
+        testcase_id = report.nodeid.split("::")[1].split('_')[1].capitalize()
+        testcase_id = [i for i in testcase_id]
+        testcase_id.insert(1, '-')
+        testcase_id = ''.join(testcase_id)
+
+        t = TestLinkReport()
+        # mark test as passed or failed in testlink
+        if report.outcome == 'passed':
+            t.report_test_case(testcase_id, 'p', item.config.getoption("testplan"), item.config.getoption("build"))
+        elif report.outcome == 'failed':
+            t.report_test_case(testcase_id, 'f', item.config.getoption("testplan"), item.config.getoption("build"))
+
         xfail = hasattr(report, "wasxfail")
         if (report.skipped and xfail) or (report.failed and not xfail):
             # only add additional html on failure
@@ -30,8 +49,8 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture(scope='function')
 def setup_browser():
     driver = CreateDriver()
-    driver.set_driver('chrome', 'local', './drivers/chromedriver.exe', '--headless')
-    # driver.set_driver('chrome', 'local', './drivers/chromedriver.exe')
+    # driver.set_driver('chrome', 'local', './drivers/chromedriver.exe', '--headless')
+    driver.set_driver('chrome', 'local', './drivers/chromedriver.exe')
     # driver.set_driver('chrome', 'remote')
     browser = driver.get_current_driver()
 
