@@ -74,6 +74,14 @@ Each test function name consists of 3 parts separated by `_`:
 * test case name (for easy test case identification),   
 For example `test_c4_login_invalid_credentials`.   
 
+The following parameters are required:   
+* build (build name)   
+* testplan (test plan name)    
+
+Command example:   
+`pytest -k test_c4_login_invalid_credentials --build="test build" --testplan="test plan 1"`   
+
+
 ### Parallel execution
 
 For parallel tests execution tests uses pytest plugin - _pytest-dist_. To run tests in parallel user should
