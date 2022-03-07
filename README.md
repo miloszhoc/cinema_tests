@@ -18,6 +18,7 @@ are [here](https://docs.google.com/spreadsheets/d/1waFV-8ZkhgdNZUMMdUEsn7iaLLuMz
     * pytest-xdist
     * pytest-assume
     * pytest-html
+ * testlink
 
 ## Running tests
 
