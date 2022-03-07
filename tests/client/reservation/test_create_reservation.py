@@ -7,7 +7,7 @@ from utils.utils import DateUtils
 
 
 @pytest.mark.email
-def test_add_client_valid_reservation(create_active_film_show, create_ticket_type, get_client_module):
+def test_c81_add_client_valid_reservation(create_active_film_show, create_ticket_type, get_client_module):
     driver = get_client_module
     show_data = create_active_film_show
     ticket_type = create_ticket_type
@@ -53,7 +53,7 @@ def test_add_client_valid_reservation(create_active_film_show, create_ticket_typ
     assert '/anuluj/' in email_content
 
 
-def test_add_client_invalid_reservation_more_than_10_seats(create_active_film_show, get_client_module):
+def test_c82_add_client_invalid_reservation_more_than_10_seats(create_active_film_show, get_client_module):
     driver = get_client_module
     show_data = create_active_film_show
 

@@ -5,7 +5,7 @@ from pom.worker.pages.login_page import PreLoginP
 
 
 @pytest.mark.production
-def test_login_as_staff_admin(get_worker_module):
+def test_c2_login_as_staff_admin(get_worker_module):
     driver = get_worker_module
     page = PreLoginP(driver)
     page = page.enter_login_page().login(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS)
@@ -24,7 +24,7 @@ def test_login_as_staff_admin(get_worker_module):
 
 
 @pytest.mark.production
-def test_login_as_admin(get_worker_module):
+def test_c1_login_as_admin(get_worker_module):
     driver = get_worker_module
     page = PreLoginP(driver)
     page = page.enter_login_page().login(ADMIN_LOG, ADMIN_PASS)
@@ -43,7 +43,7 @@ def test_login_as_admin(get_worker_module):
 
 
 @pytest.mark.production
-def test_login_as_worker(get_worker_module):
+def test_c3_login_as_worker(get_worker_module):
     driver = get_worker_module
     page = PreLoginP(driver)
     page = page.enter_login_page().login(WORKER_LOG, WORKER_PASS)
@@ -62,7 +62,7 @@ def test_login_as_worker(get_worker_module):
 
 
 @pytest.mark.production
-def test_login_invalid_credentials(get_worker_module):
+def test_c4_login_invalid_credentials(get_worker_module):
     driver = get_worker_module
     page = PreLoginP(driver)
     page.enter_login_page().login('test', 'test')

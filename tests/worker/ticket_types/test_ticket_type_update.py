@@ -6,7 +6,7 @@ from pom.worker.pages.ticket_types.list_page import ActiveTicketTypesListP
 from utils.utils import DateUtils
 
 
-def test_update_ticket_type_and_check_details(login_logout):
+def test_c60_update_ticket_type_and_check_details(login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/typy-biletow')
     page = ActiveTicketTypesListP(browser)
 

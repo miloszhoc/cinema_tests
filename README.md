@@ -60,6 +60,28 @@ run `pytest --html=<output__file_name.html> --self-contained-html` command. Repo
 additional info (like application's page URL where error occurred or browser logs) for making debugging easier.
 Repository contains [example html report](./example_report.html).
 
+### TestLink integration
+
+Test supports integration with TestLink in the scope of marking tests as passed or failed within the build.
+Functionality uses [TestLink-API-Python-client](https://github.com/lczub/TestLink-API-Python-client) plugin. 
+The following env variables are required:   
+* TESTLINK_API_PYTHON_DEVKEY=[testlink API key]   
+* TESTLINK_API_PYTHON_SERVER_URL=http://[testlink domain name]/testlink/lib/api/xmlrpc/v1/xmlrpc.php   
+
+Each test function name consists of 3 parts separated by `_`:
+* `test` prefix (required by pytest),    
+* readable test case ID from TestLink (e.g. `c4` will be automatically converted to TestLink format: `C-4`),    
+* test case name (for easy test case identification),   
+For example `test_c4_login_invalid_credentials`.   
+
+The following parameters are required:   
+* build (build name)   
+* testplan (test plan name)    
+
+Command example:   
+`pytest -k test_c4_login_invalid_credentials --build="test build" --testplan="test plan 1"`   
+
+
 ### Parallel execution
 
 For parallel tests execution tests uses pytest plugin - _pytest-dist_. To run tests in parallel user should

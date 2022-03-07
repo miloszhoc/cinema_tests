@@ -7,7 +7,7 @@ from pom.worker.pages.movies.list_page import ActiveMoviesListP
 
 
 @pytest.mark.production
-def test_open_active_movies_list(login_logout):
+def test_c46_open_active_movies_list(login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/panel')
     page = PanelP(browser).open_module('Filmy')
     assert Assertions.is_element_on_page(browser, page.HREF_ADD_MOVIE_S)
@@ -18,7 +18,7 @@ def test_open_active_movies_list(login_logout):
 
 
 @pytest.mark.production
-def test_open_deleted_movies_list(login_logout):
+def test_c47_open_deleted_movies_list(login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/filmy')
     page = ActiveMoviesListP(browser).open_deleted_movies_list()
     assert Assertions.is_element_on_page(browser,

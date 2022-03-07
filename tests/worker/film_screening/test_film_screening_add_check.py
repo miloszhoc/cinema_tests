@@ -6,7 +6,7 @@ from pom.worker.pages.film_show.list_page import ActiveFilmShowListP
 from utils.utils import DateUtils
 
 
-def test_add_film_show_and_check_details(create_movie, login_logout):
+def test_c18_add_film_show_and_check_details(create_movie, login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse/')
     movie_data = create_movie
 

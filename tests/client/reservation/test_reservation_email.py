@@ -13,7 +13,7 @@ from utils.utils import DateUtils
 
 
 @pytest.mark.email
-def test_client_confirm_reservation(create_active_film_show, create_ticket_type, get_client_module):
+def test_c85_client_confirm_reservation(create_active_film_show, create_ticket_type, get_client_module):
     driver = get_client_module
     show_data = create_active_film_show
     ticket_type = create_ticket_type
@@ -57,7 +57,7 @@ def test_client_confirm_reservation(create_active_film_show, create_ticket_type,
 
 
 @pytest.mark.email
-def test_client_reject_reservation(create_active_film_show, create_ticket_type, get_client_module):
+def test_c86_client_reject_reservation(create_active_film_show, create_ticket_type, get_client_module):
     driver = get_client_module
     show_data = create_active_film_show
     ticket_type = create_ticket_type

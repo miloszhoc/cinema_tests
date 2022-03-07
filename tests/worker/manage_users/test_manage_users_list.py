@@ -6,7 +6,7 @@ from pom.worker.pages.panel_page import PanelP
 
 
 @pytest.mark.production
-def test_check_manage_users_module(login_logout):
+def test_c5_check_manage_users_module(login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/panel/')
     page = PanelP(browser)
     page = page.open_module('Zarządzanie użytkownikami')

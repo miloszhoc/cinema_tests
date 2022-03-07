@@ -1,7 +1,7 @@
 from pom.client.pages.main_page import MainP
 
 
-def test_price_list_page_active_ticket_type(create_ticket_type, get_client_module):
+def test_c75_price_list_page_active_ticket_type(create_ticket_type, get_client_module):
     driver = get_client_module
     ticket_type = create_ticket_type
     page = MainP(driver)
@@ -15,7 +15,7 @@ def test_price_list_page_active_ticket_type(create_ticket_type, get_client_modul
     assert page.check_data_in_table(ticket_type['name'], ticket_type['price'])
 
 
-def test_price_list_page_inactive_ticket_type(create_inactive_ticket_type, get_client_module):
+def test_c76_price_list_page_inactive_ticket_type(create_inactive_ticket_type, get_client_module):
     driver = get_client_module
     ticket_type = create_inactive_ticket_type
     page = MainP(driver)

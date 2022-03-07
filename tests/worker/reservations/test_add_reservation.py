@@ -9,7 +9,7 @@ from utils.utils import DateUtils
 
 
 @pytest.mark.email
-def test_add_check_reservation_in_active_film_show(create_active_film_show, create_ticket_type, login_logout):
+def test_c26_add_check_reservation_in_active_film_show(create_active_film_show, create_ticket_type, login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     show_data = create_active_film_show
     ticket_type = create_ticket_type
@@ -83,7 +83,7 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
         assert page.check_reservation_details(full_name, 'Telefon', number)
 
 
-def test_add_reservation_to_archive_film_show(create_archived_film_show, login_logout):
+def test_c33_add_reservation_to_archive_film_show(create_archived_film_show, login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     show_data = create_archived_film_show
 
@@ -92,7 +92,7 @@ def test_add_reservation_to_archive_film_show(create_archived_film_show, login_l
         page.reservation_list.open_add_reservation_form()
 
 
-def test_add_reservation_taken_seat(delete_film_show_with_reservation, login_logout):
+def test_c29_add_reservation_taken_seat(delete_film_show_with_reservation, login_logout):
     data = delete_film_show_with_reservation
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     page = ActiveFilmShowListP(browser).open_film_show_details(data['movie_title'])
@@ -101,7 +101,8 @@ def test_add_reservation_taken_seat(delete_film_show_with_reservation, login_log
         page._choose_seat('B1')
 
 
-def test_add_reservation_confirm_paid_instantly(create_active_film_show, create_ticket_type, login_logout):
+# todo this test case is connected with two separate test cases in testlink
+def test_c31_add_reservation_confirm_paid_instantly(create_active_film_show, create_ticket_type, login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     show_data = create_active_film_show
     ticket_type = create_ticket_type
@@ -120,5 +121,6 @@ def test_add_reservation_confirm_paid_instantly(create_active_film_show, create_
     assert 'Rezerwacja została pomyślnie utworzona. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.' \
            in page.get_message()
 
-    assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
+    assert page.get_text(
+        page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
     assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_PAID_D, person_name=name)) == 'Tak'

@@ -2,7 +2,7 @@ from pom.base.checks import Assertions
 from pom.client.pages.main_page import MainP
 
 
-def test_open_check_movie_details(create_active_film_show, get_client_module):
+def test_c73_open_check_movie_details(create_active_film_show, get_client_module):
     driver = get_client_module
     film_show = create_active_film_show
     page = MainP(driver)

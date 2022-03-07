@@ -5,7 +5,7 @@ from pom.base.checks import Assertions
 from pom.worker.pages.film_show.list_page import ActiveFilmShowListP
 
 
-def test_active_film_show_reservation_list(create_active_film_show, login_logout):
+def test_c24_active_film_show_reservation_list(create_active_film_show, login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     show_data = create_active_film_show
 
@@ -42,7 +42,7 @@ def test_active_film_show_reservation_list(create_active_film_show, login_logout
                                                                            'Usuwanie'))
 
 
-def test_archive_film_show_reservation_list(create_archived_film_show, login_logout):
+def test_c25_archive_film_show_reservation_list(create_archived_film_show, login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/seanse')
     show_data = create_archived_film_show
 
