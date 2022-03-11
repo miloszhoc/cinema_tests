@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from pom.base.manager import PageManager
 
@@ -10,6 +11,7 @@ class TopMenuP(PageManager):
     HREF_CONTACT_PAGE_S = (By.XPATH, '//li[@class="nav-item"]/a[contains(text(), "Kontakt")]')
     TEXT_TAB_NAME_S = (By.XPATH, '//h1[@class="logo-text"]')
 
+    @allure.step("Open main page")
     def open_main_page(self):
         """
         Open main page.
@@ -21,6 +23,7 @@ class TopMenuP(PageManager):
         self.wait_and_click(self.HREF_MAIN_PAGE_S)
         return main_page.MainP(self.driver)
 
+    @allure.step("Open repertoire page")
     def open_repertoire_page(self):
         """
         Open repertoire page.
@@ -32,6 +35,7 @@ class TopMenuP(PageManager):
         self.wait_and_click(self.HREF_REPERTOIRE_PAGE_S)
         return repertoire_page.RepertoireP(self.driver)
 
+    @allure.step("Open price list page.")
     def open_price_list_page(self):
         """
         Open price list page.
@@ -43,6 +47,7 @@ class TopMenuP(PageManager):
         self.wait_and_click(self.HREF_PRICE_LIST_PAGE_S)
         return price_list_page.PriceListP(self.driver)
 
+    @allure.step("Open about page.")
     def open_about_page(self):
         """
         Open about cinema page.
@@ -54,6 +59,7 @@ class TopMenuP(PageManager):
         self.wait_and_click(self.HREF_ABOUT_PAGE_S)
         return about_page.AboutP(self.driver)
 
+    @allure.step("Open contact page.")
     def open_contact_page(self):
         """
         Open contact page.
@@ -65,6 +71,7 @@ class TopMenuP(PageManager):
         self.wait_and_click(self.HREF_CONTACT_PAGE_S)
         return contact_page.ContactP(self.driver)
 
+    @allure.step("Get page title")
     def get_page_title(self):
         """
         Get page title.

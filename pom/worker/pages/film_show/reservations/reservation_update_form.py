@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from pom.worker.pages.top_menu import TopMenuP
@@ -19,6 +20,7 @@ class ReservationUpdateFormP(TopMenuP):
     SELECT_TICKET_NUMBER_S = (By.NAME, 'ticket_select')
     BUTTON_ADD_TICKETS_S = (By.XPATH, '//button[@value="Dodaj"]')
 
+    @allure.step("Select seat and ticket type")
     def select_seat_and_ticket_type(self, form_number: int, seat_name: str, ticket_type_name: str):
         """
         Set seats and ticket types for tickets in reservation
@@ -36,36 +38,45 @@ class ReservationUpdateFormP(TopMenuP):
             self.driver.find_element(*self.dynamic_locator(self.SELECT_TICKET_TYPE_D, form_number=form_number)))
         select_ticket_type.select_by_visible_text(ticket_type_name)
 
+    @allure.step("Type name")
     def _type_name(self, name: str) -> str:
         self.wait_and_type(self.INPUT_FIRST_NAME_S, name)
         return name
 
+    @allure.step("Type last name")
     def _type_last_name(self, last_name: str) -> str:
         self.wait_and_type(self.INPUT_LAST_NAME_S, last_name)
         return last_name
 
+    @allure.step("Type email")
     def _type_email(self, email: str) -> str:
         self.wait_and_type(self.INPUT_EMAIL_S, email)
         return email
 
+    @allure.step("Type phone number")
     def _type_phone_number(self, number: str) -> str:
         self.wait_and_type(self.INPUT_PHONE_NUMBER_S, number)
         return number
 
+    @allure.step("Click 'paid' checkbox")
     def _click_paid_checkbox(self):
         self.wait_and_click(self.CHECKBOX_PAID_S)
 
+    @allure.step("Click 'confirmed' checkbox")
     def _click_confirmed_checkbox(self):
         self.wait_and_click(self.CHECKBOX_CONFIRMED_S)
 
+    @allure.step("Click 'send confirmation email' checkbox")
     def _click_confirmation_email_checkbox(self):
         self.wait_and_click(self.CHECKBOX_CONFIRMATION_EMAIL_S)
 
+    @allure.step("Send update reservation form")
     def click_send_update_form_button(self):
         from pom.worker.pages.film_show.film_show_details import FilmShowDetailsP
         self.wait_and_click(self.BUTTON_SEND_UPDATE_FORM_S)
         return FilmShowDetailsP(self.driver)
 
+    @allure.step("Set number of ticket reservation in form")
     def add_tickets(self, ticket_number: str):
         """
         Set number of ticket reservation in form

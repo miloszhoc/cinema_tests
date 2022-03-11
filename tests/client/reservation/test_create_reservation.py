@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from env_data import EMAIL_LOGIN
@@ -46,8 +47,9 @@ def test_c81_add_client_valid_reservation(create_active_film_show, create_ticket
     assert 'Rezerwacja została pomyślnie utworzona, na twój adres mailowy została wysłana wiadomość z potwierdzeniem. Jeśli nie potwierdzisz rezerwacji w ciągu 30 minut, to zostanie ona automatycznie usunięta z systemu. W przypadku braku otrzymania wiadomości email prosimy o pilny kontakt telefoniczny.' \
            in page.get_message()
 
-    e = Email()
-    email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
+    with allure.step('Read email'):
+        e = Email()
+        email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
 
     assert '/potwierdz/' in email_content
     assert '/anuluj/' in email_content

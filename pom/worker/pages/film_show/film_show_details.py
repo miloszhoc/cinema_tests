@@ -1,5 +1,7 @@
 from webbrowser import Chrome
 
+import allure
+
 from pom.worker.pages.film_show.reservations.reservation_list import ReservationListP
 from pom.worker.pages.top_menu import TopMenuP
 from selenium.webdriver.common.by import By
@@ -18,16 +20,19 @@ class FilmShowDetailsP(TopMenuP):
         super().__init__(driver)
         self.reservation_list = ReservationListP(self.driver)
 
+    @allure.step("Open update film show form")
     def open_update_film_show_form(self):
         import pom.worker.pages.film_show.film_show_form as film_show_form
 
         self.wait_and_click(self.HREF_UPDATE_FILM_SHOW_S)
         return film_show_form.FilmShowAddFormP(self.driver)
 
+    @allure.step("Open delete film show form")
     def open_delete_film_show_page(self) -> film_show_delete.FilmShowDeleteP:
         self.wait_and_click(self.HREF_DELETE_FILM_SHOW_S)
         return film_show_delete.FilmShowDeleteP(self.driver)
 
+    @allure.step("Get message which appears on screen")
     def get_message(self) -> str:
         """
         Get message which appears on screen

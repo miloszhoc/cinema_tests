@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from pom.worker.pages.top_menu import TopMenuP
@@ -10,6 +11,7 @@ import pom.worker.pages.ticket_types.list_page as ticket_list
 class PanelP(TopMenuP):
     HREF_MODULE_D = (By.XPATH, '//a[contains(text(), "{}")]')
 
+    @allure.step("Open module {1}")
     def open_module(self, module_name: str):
         """
         Open module

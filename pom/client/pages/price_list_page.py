@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from pom.base.checks import Assertions
 from pom.client.pages.top_menu import TopMenuP
@@ -10,6 +11,7 @@ class PriceListP(TopMenuP):
     TEXT_TICKET_TYPE_DESCRIPTION_D = (By.XPATH,
                                       '//div[@class="card-body"]//div[@class="ticket" and contains(text(), "{}")]')
 
+    @allure.step("Returns column names")
     def get_column_names(self):
         """
         Returns column names
@@ -18,6 +20,7 @@ class PriceListP(TopMenuP):
         """
         return [column.text.strip() for column in self.driver.find_elements(*self.TEXT_COLUMN_HEADER_S)]
 
+    @allure.step("Check if row with given ticket type and price exists in table.")
     def check_data_in_table(self, type_name: str, type_price: str) -> bool:
         """
         Return True if row with given ticket type and price exists in table.
@@ -31,6 +34,7 @@ class PriceListP(TopMenuP):
                                                                                type_name=type_name,
                                                                                price=type_price))
 
+    @allure.step("Check if element with given type and description exists.")
     def check_ticket_type_details(self, type_name: str, type_description: str) -> bool:
         """
         Return True if element with given text content exists.
