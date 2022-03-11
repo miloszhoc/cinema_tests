@@ -18,6 +18,7 @@ are [here](https://docs.google.com/spreadsheets/d/1waFV-8ZkhgdNZUMMdUEsn7iaLLuMz
     * pytest-xdist
     * pytest-assume
     * pytest-html
+* allure
 
 ## Running tests
 
@@ -53,12 +54,18 @@ Only tests which are marked as production should be run against production envir
 data into database. To run this kind of tests user should set `env` variable to `production` and
 invoke `pytest -k production` command.
 
-### Run with HTML report
+### Run with HTML report (pytest-html)
 
-Test supports pytest-html reports. To run tests with report user should
+Test supports pytest-html reports. To run tests with report
 run `pytest --html=<output__file_name.html> --self-contained-html` command. Report contains stacktrace, screen, and some
 additional info (like application's page URL where error occurred or browser logs) for making debugging easier.
 Repository contains [example html report](./example_report.html).
+
+### Run with Allure report
+
+Test supports allure reports. To run tests with report run `pytest --alluredir=.\allure_results` command. Report
+contains stacktrace, screen, and some additional info (like application's page URL where error occurred or browser
+cookies) for making debugging easier. In order to open report run `allure serve .\allure_results` command.
 
 ### Parallel execution
 
