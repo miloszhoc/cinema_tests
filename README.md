@@ -19,6 +19,7 @@ are [here](https://docs.google.com/spreadsheets/d/1waFV-8ZkhgdNZUMMdUEsn7iaLLuMz
     * pytest-assume
     * pytest-html
 * allure
+* testlink
 
 ## Running tests
 
@@ -66,6 +67,28 @@ Repository contains [example html report](./example_report.html).
 Test supports allure reports. To run tests with report run `pytest --alluredir=.\allure_results` command. Report
 contains stacktrace, screen, and some additional info (like application's page URL where error occurred or browser
 cookies) for making debugging easier. In order to open report run `allure serve .\allure_results` command.
+
+### TestLink integration
+
+Test supports integration with TestLink in the scope of marking tests as passed or failed within the build.
+Functionality uses [TestLink-API-Python-client](https://github.com/lczub/TestLink-API-Python-client) plugin. 
+The following env variables are required:   
+* TESTLINK_API_PYTHON_DEVKEY=[testlink API key]   
+* TESTLINK_API_PYTHON_SERVER_URL=http://[testlink domain name]/testlink/lib/api/xmlrpc/v1/xmlrpc.php   
+
+Each test function name consists of 3 parts separated by `_`:
+* `test` prefix (required by pytest),    
+* readable test case ID from TestLink (e.g. `c4` will be automatically converted to TestLink format: `C-4`),    
+* test case name (for easy test case identification),   
+For example `test_c4_login_invalid_credentials`.   
+
+The following parameters are required:   
+* build (build name)   
+* testplan (test plan name)    
+
+Command example:   
+`pytest -k test_c4_login_invalid_credentials --build="test build" --testplan="test plan 1"`   
+
 
 ### Parallel execution
 

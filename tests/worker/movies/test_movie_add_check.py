@@ -2,12 +2,13 @@ import os
 import pytest
 
 from env_data import STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, IMG_FILE
+from pom.base.checks import Assertions
 from pom.worker.pages.movies.list_page import ActiveMoviesListP
 from utils.utils import DateUtils
 
 
 @pytest.mark.parametrize('is_deleted', [True, False])
-def test_add_movie_and_check_details(login_logout, is_deleted):
+def test_c48_add_movie_and_check_details(login_logout, is_deleted):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/filmy')
     page = ActiveMoviesListP(browser)
 
@@ -29,31 +30,34 @@ def test_add_movie_and_check_details(login_logout, is_deleted):
                                                 thumbnail_file_path, youtube_id, deleted, duration)
 
     with pytest.assume:
-        assert page.check_url('szczegoly-filmu')
+        assert Assertions.check_url(browser, 'szczegoly-filmu')
 
     page = page.open_panel_page().open_module('Filmy')
     if not is_deleted:
-        page.is_element_on_page(page.dynamic_locator(page.TEXT_DELETED_COLUMN_VALUE_D, title=title, deleted='Nie'))
+        Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_DELETED_COLUMN_VALUE_D, title=title,
+                                                                    deleted='Nie'))
         page = page.open_movie_details(title)
     else:
         page = page.open_deleted_movies_list()
-        page.is_element_on_page(page.dynamic_locator(page.TEXT_DELETED_COLUMN_VALUE_D, title=title, deleted='Tak'))
+        Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_DELETED_COLUMN_VALUE_D, title=title,
+                                                                    deleted='Tak'))
         page = page.open_movie_details(title)
 
     with pytest.assume:
-        assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Tytuł', value=title))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Tytuł',
+                                                                           value=title))
     with pytest.assume:
-        assert page.is_element_on_page(
-            page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Reżyser', value=director))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D, name='Reżyser',
+                                                                           value=director))
     with pytest.assume:
-        assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
-                                                            name='Data premiery', value=release_year))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
+                                                                           name='Data premiery', value=release_year))
     with pytest.assume:
-        assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
-                                                            name='Czas trwania', value=duration))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
+                                                                           name='Czas trwania', value=duration))
     with pytest.assume:
-        assert page.is_element_on_page(page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
-                                                            name='Opis', value=description))
+        assert Assertions.is_element_on_page(browser, page.dynamic_locator(page.TEXT_FIELD_NAME_VALUE_D,
+                                                                           name='Opis', value=description))
     with pytest.assume:
         assert youtube_id in page.get_element_attr(page.FRAME_YT_S, 'src')
     with pytest.assume:

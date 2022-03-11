@@ -2,7 +2,7 @@ from pom.client.pages.main_page import MainP
 from utils.utils import DateUtils
 
 
-def test_repertoire_page(get_client_module, create_active_film_show):
+def test_c77_repertoire_page(get_client_module, create_active_film_show):
     show_data = create_active_film_show
     driver = get_client_module
     page = MainP(driver)

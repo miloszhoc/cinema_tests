@@ -2,6 +2,7 @@ import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
+from pom.base.checks import Assertions
 from pom.client.pages.top_menu import TopMenuP
 
 
@@ -88,7 +89,8 @@ class ReservationAddForm2ndTabP(TopMenuP):
         :param value: field value
         :return: True or false
         """
-        return self.is_element_on_page(self.dynamic_locator(self.TEXT_SUMMARY_D, label=label, value=value))
+        return Assertions.is_element_on_page(self.driver,
+                                             self.dynamic_locator(self.TEXT_SUMMARY_D, label=label, value=value))
 
     @allure.step("Choose ticket type for a seat")
     def _choose_ticket_type(self, seat_label: str, ticket_type_name: str) -> dict:
@@ -126,12 +128,14 @@ class ReservationAddForm3rdTabP(TopMenuP):
         :param value: field value
         :return: True or false
         """
-        return self.is_element_on_page(self.dynamic_locator(self.TEXT_SUMMARY_D, label=label, value=value))
+        return Assertions.is_element_on_page(self.driver,
+                                             self.dynamic_locator(self.TEXT_SUMMARY_D, label=label, value=value))
 
     @allure.step("Check ticket type")
     def check_ticket_type(self, seat_label: str, ticket_type_name: str):
-        return self.is_element_on_page(
-            self.dynamic_locator(self.TEXT_TICKET_TYPE_D, seat=seat_label, ticket=ticket_type_name))
+        return Assertions.is_element_on_page(self.driver,
+                                             self.dynamic_locator(self.TEXT_TICKET_TYPE_D, seat=seat_label,
+                                                                  ticket=ticket_type_name))
 
     def check_total_price(self, total_price: str):
         return total_price.replace('.', ',') in self.get_text(self.TEXT_TOTAL_PRICE_S)

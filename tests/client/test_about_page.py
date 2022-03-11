@@ -4,7 +4,7 @@ from pom.client.pages.main_page import MainP
 
 
 @pytest.mark.production
-def test_about_page(get_client_module):
+def test_c68_about_page(get_client_module):
     driver = get_client_module
     page = MainP(driver)
     page = page.open_about_page()

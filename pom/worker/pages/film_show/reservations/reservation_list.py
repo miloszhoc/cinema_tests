@@ -1,5 +1,6 @@
 import allure
 
+from pom.base.checks import Assertions
 from pom.base.manager import PageManager
 from selenium.webdriver.common.by import By
 from pom.worker.pages.film_show.reservations.reservation_form import ReservationAddForm1stTabP
@@ -50,7 +51,7 @@ class ReservationListP(PageManager):
         :return: True or False
         """
 
-        return self.is_element_on_page(self.dynamic_locator(self.TEXT_RESERVATION_DETAILS_NAME_VALUE_D,
+        return Assertions.is_element_on_page(self.dynamic_locator(self.TEXT_RESERVATION_DETAILS_NAME_VALUE_D,
                                                             person_name=person_name,
                                                             name=field_name,
                                                             value=field_value))
@@ -93,3 +94,4 @@ class ReservationListP(PageManager):
 
         self.wait_scroll_and_click(self.dynamic_locator(self.HREF_UPDATE_RESERVATION_FORM_D, person_name=person_name))
         return ReservationUpdateFormP(self.driver)
+

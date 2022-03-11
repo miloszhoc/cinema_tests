@@ -1,6 +1,7 @@
 import pytest
 
 from env_data import STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, IMG_FILE, WORKER_PASS, WORKER_LOG
+from pom.base.checks import Assertions
 from pom.worker.pages.movies.list_page import ActiveMoviesListP
 from utils.utils import DateUtils
 from selenium.common.exceptions import TimeoutException
@@ -8,7 +9,7 @@ from selenium.common.exceptions import TimeoutException
 
 # todo - DRY, create movie with request
 
-def test_delete_movie(login_logout):
+def test_c51_delete_movie(login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/filmy')
     page = ActiveMoviesListP(browser)
 
@@ -27,10 +28,10 @@ def test_delete_movie(login_logout):
     with pytest.assume:
         assert page.check_movie_title(title)
     page = page.delete_movie()
-    assert not page.is_element_on_page(page.dynamic_locator(page.HREF_MOVIE_DETAILS_D, title))
+    assert not Assertions.is_element_on_page(browser, page.dynamic_locator(page.HREF_MOVIE_DETAILS_D, title))
 
 
-def test_abandon_deletion_form(login_logout):
+def test_c52_abandon_deletion_form(login_logout):
     browser = login_logout(STAFF_ADMIN_LOG, STAFF_ADMIN_PASS, '/worker/filmy')
     page = ActiveMoviesListP(browser)
 
@@ -49,12 +50,12 @@ def test_abandon_deletion_form(login_logout):
     with pytest.assume:
         assert page.check_movie_title(title)
     page = page.exit_form_without_deletion()
-    assert page.check_url('szczegoly-filmu')
+    assert Assertions.check_url(browser, 'szczegoly-filmu')
 
 
 # fixme may crash randomly - clicks on the first movie on the list
 @pytest.mark.xfail()
-def test_delete_movie_user_without_privileges(login_logout):
+def test_c53_delete_movie_user_without_privileges(login_logout):
     browser = login_logout(WORKER_LOG, WORKER_PASS, '/worker/filmy')
     page = ActiveMoviesListP(browser)
     with pytest.raises(TimeoutException):
