@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from pom.worker.pages.top_menu import TopMenuP
@@ -6,6 +7,7 @@ from pom.worker.pages.top_menu import TopMenuP
 class ReservationDeleteP(TopMenuP):
     BUTTON_DELETE_S = (By.XPATH, '//button[@value="Usuń"]')
 
+    @allure.step("Delete reservation")
     def delete_reservation(self):
         """
         Deletes reservation and redirects to film show page
@@ -17,4 +19,3 @@ class ReservationDeleteP(TopMenuP):
 
         self.wait_and_click(self.BUTTON_DELETE_S)
         return FilmShowDetailsP(self.driver)
-

@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from pom.worker.pages.top_menu import TopMenuP
@@ -10,12 +11,14 @@ class TicketTypeDetailsP(TopMenuP):
     TEXT_FIELD_NAME_VALUE_D = (By.XPATH,
                                '//div[@class="name"]/b[contains(text(), "{name}")]//..//../div[contains(text(), "{value}")]')
 
+    @allure.step("Open update ticket type form")
     def open_update_ticket_type_form(self):
         import pom.worker.pages.ticket_types.ticket_type_form as ticket_type_form
 
         self.wait_and_click(self.HREF_UPDATE_TICKET_TYPE_S)
         return ticket_type_form.TicketTypeAddFormP(self.driver)
 
+    @allure.step("Open delete ticket type form")
     def open_delete_ticket_type_page(self) -> ticket_type_delete.TicketTypeDeleteP:
         self.wait_and_click(self.HREF_DELETE_TICKET_TYPE_S)
         return ticket_type_delete.TicketTypeDeleteP(self.driver)

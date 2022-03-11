@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 import pom.worker.pages.ticket_types.ticket_type_form as ticket_type_form
 
@@ -12,6 +13,7 @@ class TicketTypesListP(TopMenuP):
     HREF_TICKET_TYPE_DETAILS_D = (By.XPATH,
                                   '//td[contains(text(), "{}")]//following-sibling::td//a[contains(text(), "Przejdź do szczegółów")]')
 
+    @allure.step("Open ticket type details")
     def open_ticket_type_details(self, type_name: str) -> ticket_type_details.TicketTypeDetailsP:
         """
         Open ticket type details.
@@ -19,7 +21,6 @@ class TicketTypesListP(TopMenuP):
         :param type_name:  ticket type name
         :return: Ticket type details page
         """
-        print(self.dynamic_locator(self.HREF_TICKET_TYPE_DETAILS_D, type_name))
         self.wait_and_click(self.dynamic_locator(self.HREF_TICKET_TYPE_DETAILS_D, type_name))
         return ticket_type_details.TicketTypeDetailsP(self.driver)
 
@@ -32,6 +33,7 @@ class ActiveTicketTypesListP(TicketTypesListP):
     HREF_ADD_TICKET_TYPE_S = (By.LINK_TEXT, 'Dodaj typ biletu')
     HREF_DELETED_TICKET_TYPES_S = (By.LINK_TEXT, 'Usunięte typy biletów')
 
+    @allure.step("Open new ticket type form.")
     def open_add_ticket_type_form(self) -> ticket_type_form.TicketTypeAddFormP:
         """
         Open new ticket type form.
@@ -41,6 +43,7 @@ class ActiveTicketTypesListP(TicketTypesListP):
         self.wait_and_click(self.HREF_ADD_TICKET_TYPE_S)
         return ticket_type_form.TicketTypeAddFormP(self.driver)
 
+    @allure.step("Open deleted ticket types list.")
     def open_deleted_ticket_types_list(self) -> DeletedTicketTypesListP:
         """
         Open deleted ticket types list.

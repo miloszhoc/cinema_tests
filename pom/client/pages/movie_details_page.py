@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from pom.client.pages.reservation.reservation_form_page import ReservationAddForm1stTabP
@@ -14,6 +15,7 @@ class MovieDetailsP(TopMenuP):
                             '//td[contains(text(), "{datetime}")]/..//a[contains(text(), "Zarezerwuj miejsce")]')
     TEXT_MESSAGE_S = (By.CLASS_NAME, 'message')
 
+    @allure.step("Get field value based on field name - {1}")
     def get_field_value(self, field_name: str) -> str:
         """
         Get field value based on field name
@@ -23,6 +25,7 @@ class MovieDetailsP(TopMenuP):
         """
         return self.get_text(self.dynamic_locator(self.TEXT_FIELD_VALUE_D, name=field_name))
 
+    @allure.step("Opens reservation form for the film show")
     def open_reservation_form(self, start_datetime: str):
         """
         Opens reservation form for the film show
@@ -37,6 +40,7 @@ class MovieDetailsP(TopMenuP):
         self.wait_and_click(self.dynamic_locator(self.BUTTON_RESERVATION_D, datetime=new_start_datetime))
         return ReservationAddForm1stTabP(self.driver)
 
+    @allure.step("Get message which appears on screen")
     def get_message(self) -> str:
         """
         Get message which appears on screen

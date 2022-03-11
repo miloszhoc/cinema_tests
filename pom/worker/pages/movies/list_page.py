@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 import pom.worker.pages.movies.movie_form as movie_form
 
@@ -13,6 +14,7 @@ class MovieListP(TopMenuP):
     TEXT_DELETED_COLUMN_VALUE_D = (By.XPATH,
                                    '//td[contains(text(), "{title}")]//following-sibling::td[contains(text(), "{deleted}")]')
 
+    @allure.step("Open movie details.")
     def open_movie_details(self, movie_title: str) -> movie_details.MovieDetailsP:
         """
         Open movie details.
@@ -20,7 +22,6 @@ class MovieListP(TopMenuP):
         :param movie_title: movie title
         :return: Movie details page
         """
-        print(self.dynamic_locator(self.HREF_MOVIE_DETAILS_D, movie_title))
         self.wait_and_click(self.dynamic_locator(self.HREF_MOVIE_DETAILS_D, movie_title))
         return movie_details.MovieDetailsP(self.driver)
 
@@ -33,6 +34,7 @@ class ActiveMoviesListP(MovieListP):
     HREF_ADD_MOVIE_S = (By.LINK_TEXT, 'Dodaj film')
     HREF_DELETED_MOVIES_S = (By.LINK_TEXT, 'Usunięte filmy')
 
+    @allure.step("Open new movie form.")
     def open_add_movie_form(self) -> movie_form.MovieAddFormP:
         """
         Open new movie form.
@@ -42,6 +44,7 @@ class ActiveMoviesListP(MovieListP):
         self.wait_and_click(self.HREF_ADD_MOVIE_S)
         return movie_form.MovieAddFormP(self.driver)
 
+    @allure.step("Open deleted movies list.")
     def open_deleted_movies_list(self) -> DeletedMovieListP:
         """
         Open deleted movies list.

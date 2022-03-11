@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
@@ -13,6 +14,7 @@ class ReservationAddForm1stTabP(TopMenuP):
     BUTTON_NEXT_S = (By.XPATH, '//button[@type="submit"]')
     TEXT_MESSAGE_S = (By.CLASS_NAME, 'message')
 
+    @allure.step("Get message")
     def get_message(self) -> str:
         """
         Get message which appears on screen
@@ -30,22 +32,27 @@ class ReservationAddForm1stTabP(TopMenuP):
 
         return self._click_next_button()
 
+    @allure.step("Type name {1}")
     def _type_name(self, name: str) -> str:
         self.wait_and_type(self.INPUT_NAME_S, name)
         return name
 
+    @allure.step("Type last name {1}")
     def _type_last_name(self, last_name: str) -> str:
         self.wait_and_type(self.INPUT_LAST_NAME_S, last_name)
         return last_name
 
+    @allure.step("Type email {1}")
     def _type_email(self, email: str) -> str:
         self.wait_and_type(self.INPUT_EMAIL_S, email)
         return email
 
+    @allure.step("Type phone number {1}")
     def _type_phone_number(self, number: str) -> str:
         self.wait_and_type(self.INPUT_PHONE_S, number)
         return number
 
+    @allure.step("Choose {1} seat")
     def _choose_seat(self, seat: str) -> str:
         """
         Check seat.
@@ -56,6 +63,7 @@ class ReservationAddForm1stTabP(TopMenuP):
         self.wait_and_click(self.dynamic_locator(self.CHECKBOX_SEAT_D, seat))
         return seat
 
+    @allure.step("Open second form tab")
     def _click_next_button(self):
         self.wait_and_click(self.BUTTON_NEXT_S)
         return ReservationAddForm2ndTabP(self.driver)
@@ -71,6 +79,7 @@ class ReservationAddForm2ndTabP(TopMenuP):
         self._choose_ticket_type(seat_label, ticket_type_name)
         return self._click_next_button()
 
+    @allure.step("Check summary")
     def check_summary(self, label: str, value: str) -> bool:
         """
         Checks data from previous tab in summary table.
@@ -81,6 +90,7 @@ class ReservationAddForm2ndTabP(TopMenuP):
         """
         return self.is_element_on_page(self.dynamic_locator(self.TEXT_SUMMARY_D, label=label, value=value))
 
+    @allure.step("Choose ticket type for a seat")
     def _choose_ticket_type(self, seat_label: str, ticket_type_name: str) -> dict:
         """
 
@@ -94,6 +104,7 @@ class ReservationAddForm2ndTabP(TopMenuP):
             *self.dynamic_locator(self.SELECT_TICKET_TYPE_D, seat_label))).select_by_visible_text(ticket_type_name)
         return {seat_label: ticket_type_name}
 
+    @allure.step("Open third form tab")
     def _click_next_button(self):
         self.wait_and_click(self.BUTTON_NEXT_S)
         return ReservationAddForm3rdTabP(self.driver)
@@ -106,6 +117,7 @@ class ReservationAddForm3rdTabP(TopMenuP):
                           '//div[@class="seat_name" and contains(text(), "{seat}")]//following-sibling::div[@class="ticket_type" and contains(text(), "{ticket}")]')
     TEXT_TOTAL_PRICE_S = (By.ID, 'total_price')
 
+    @allure.step("Check summary")
     def check_summary(self, label: str, value: str) -> bool:
         """
         Checks data from previous tab in summary table.
@@ -116,6 +128,7 @@ class ReservationAddForm3rdTabP(TopMenuP):
         """
         return self.is_element_on_page(self.dynamic_locator(self.TEXT_SUMMARY_D, label=label, value=value))
 
+    @allure.step("Check ticket type")
     def check_ticket_type(self, seat_label: str, ticket_type_name: str):
         return self.is_element_on_page(
             self.dynamic_locator(self.TEXT_TICKET_TYPE_D, seat=seat_label, ticket=ticket_type_name))
@@ -123,6 +136,7 @@ class ReservationAddForm3rdTabP(TopMenuP):
     def check_total_price(self, total_price: str):
         return total_price.replace('.', ',') in self.get_text(self.TEXT_TOTAL_PRICE_S)
 
+    @allure.step("Send reservation form. Redirect to film show details")
     def send_reservation(self):
         """
         Send reservation and redirect to film show details

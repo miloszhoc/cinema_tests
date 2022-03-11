@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver import ActionChains
 
 from pom.worker.pages.top_menu import TopMenuP
@@ -17,6 +18,7 @@ class FilmShowAddFormP(TopMenuP):
 
     OPTION_BREAK_TIME_D = (By.XPATH, '//a[contains(text(), "{}")]//parent::li[@class="ui-menu-item"]')
 
+    @allure.step("Add film show")
     def add_film_show(self,
                       movie_title: str,
                       start_datetime: str,
@@ -35,6 +37,7 @@ class FilmShowAddFormP(TopMenuP):
         self._type_start_datetime(start_datetime)
         return self._click_save_button()
 
+    @allure.step("Open new movie form")
     def open_add_movie_form(self) -> movie_form.MovieAddFormP:
         """
         Open add movie form
@@ -44,11 +47,13 @@ class FilmShowAddFormP(TopMenuP):
         self.wait_and_click(self.HREF_ADD_MOVIE_S)
         return movie_form.MovieAddFormP(self.driver)
 
+    @allure.step("Select movie")
     def _select_movie_title(self, movie_title: str) -> str:
         select = Select(self.driver.find_element(*self.SELECT_MOVIE_S))
         select.select_by_visible_text(movie_title)
         return movie_title
 
+    @allure.step("Type start date")
     def _type_start_datetime(self, start_datetime: str) -> str:
         action = ActionChains(self.driver)
         action.move_to_element(self.driver.find_element(*self.INPUT_START_DATE_S)).click().perform()
@@ -58,12 +63,14 @@ class FilmShowAddFormP(TopMenuP):
         action2.click(self.driver.find_element(*self.INPUT_START_DATE_S)).perform()
         return start_datetime
 
+    @allure.step("Type break date")
     def _type_show_break_time(self, break_time: str = '00:10:00') -> str:
         action = ActionChains(self.driver)
         action.click(self.driver.find_element(*self.INPUT_SHOW_BREAK_S)).perform()
         action.click(self.driver.find_element(*self.dynamic_locator(self.OPTION_BREAK_TIME_D, break_time))).perform()
         return break_time
 
+    @allure.step("Click save button")
     def _click_save_button(self):
         self.wait_and_click(self.BUTTON_SAVE_S)
         return film_show_details.FilmShowDetailsP(self.driver)

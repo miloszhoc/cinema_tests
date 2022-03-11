@@ -1,3 +1,5 @@
+import allure
+
 from pom.worker.pages.top_menu import TopMenuP
 from selenium.webdriver.common.by import By
 
@@ -7,6 +9,7 @@ class MovieDeleteP(TopMenuP):
     BUTTON_YES_S = (By.XPATH, '//button[@value="Yes"]')
     BUTTON_NO_S = (By.XPATH, '//a[contains(text(), "Nie")]')
 
+    @allure.step("Open deleted movies list.")
     def check_movie_title(self, title: str) -> bool:
         """
         Check if movie title is in heading.
@@ -16,6 +19,7 @@ class MovieDeleteP(TopMenuP):
         """
         return title in self.get_text(self.TEXT_SECTION_HEADING_S)
 
+    @allure.step("Confirm movie deletion")
     def delete_movie(self):
         """
         click "yes" button.
@@ -26,6 +30,7 @@ class MovieDeleteP(TopMenuP):
         self.wait_and_click(self.BUTTON_YES_S)
         return list_page.ActiveMoviesListP(self.driver)
 
+    @allure.step("Abandon movie delete form")
     def exit_form_without_deletion(self):
         """
         click "no" button.

@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from pom.worker.pages.film_show.film_show_details import FilmShowDetailsP
@@ -9,18 +10,22 @@ class ReservationPayConfirmFormP(TopMenuP):
     INPUT_CONFIRMED_S = (By.NAME, 'confirmed')
     BUTTON_SEND_S = (By.XPATH, '//input[@value="Zatwierdź"]')
 
+    @allure.step("Check 'paid' checkbox")
     def _check_paid_checkbox(self):
         self.wait_and_click(self.INPUT_PAID_S)
         return True
 
+    @allure.step("Check 'confirmed' checkbox")
     def _check_confirmed_checkbox(self):
         self.wait_and_click(self.INPUT_CONFIRMED_S)
         return True
 
+    @allure.step("Send form")
     def send_form(self):
         self.wait_and_click(self.BUTTON_SEND_S)
         return FilmShowDetailsP(self.driver)
 
+    @allure.step("mark reservation as paid or confirmed")
     def mark_reservation(self, paid: bool, confirmed: bool):
         """
         Mark reservation as paid or confirmed.

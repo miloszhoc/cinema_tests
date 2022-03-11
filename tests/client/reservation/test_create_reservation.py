@@ -1,3 +1,4 @@
+import allure
 import pytest
 
 from env_data import EMAIL_LOGIN

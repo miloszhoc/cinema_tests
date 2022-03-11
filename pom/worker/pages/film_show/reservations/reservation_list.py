@@ -1,3 +1,5 @@
+import allure
+
 from pom.base.manager import PageManager
 from selenium.webdriver.common.by import By
 from pom.worker.pages.film_show.reservations.reservation_form import ReservationAddForm1stTabP
@@ -21,10 +23,12 @@ class ReservationListP(PageManager):
     HREF_UPDATE_RESERVATION_FORM_D = (By.XPATH,
                                       '//td[contains(text(), "{person_name}")]//following-sibling::td[@class="edit"]/a')
 
+    @allure.step("Open new reservation form")
     def open_add_reservation_form(self) -> ReservationAddForm1stTabP:
         self.wait_and_click(self.HREF_ADD_RESERVATION_S)
         return ReservationAddForm1stTabP(self.driver)
 
+    @allure.step("Open reservation details")
     def open_reservation_details(self, person_name: str):
         """
         Opens reservation details for a particular client
@@ -35,6 +39,7 @@ class ReservationListP(PageManager):
 
         self.wait_and_click(self.dynamic_locator(self.HREF_RESERVATION_DETAILS_D, person_name=person_name))
 
+    @allure.step("Check reservation details")
     def check_reservation_details(self, person_name: str, field_name: str, field_value: str) -> bool:
         """
         Checks reservation details. (checks if element exists)
@@ -50,6 +55,7 @@ class ReservationListP(PageManager):
                                                             name=field_name,
                                                             value=field_value))
 
+    @allure.step("Open pay/confirm form")
     def open_pay_confirm_form(self, person_name: str):
         """
         Opens form used to mark reservation as confirmed or paid
@@ -62,6 +68,7 @@ class ReservationListP(PageManager):
         self.wait_and_click(self.dynamic_locator(self.HREF_PAY_CONFIRM_RESERVATION_FORM_D, person_name=person_name))
         return ReservationPayConfirmFormP(self.driver)
 
+    @allure.step("Open delete reservation form")
     def open_delete_reservation_page(self, person_name: str):
         """
         Opens form used to delete reservation
@@ -74,6 +81,7 @@ class ReservationListP(PageManager):
         self.wait_and_click(self.dynamic_locator(self.HREF_DELETE_RESERVATION_FORM_D, person_name=person_name))
         return ReservationDeleteP(self.driver)
 
+    @allure.step("Open update reservation form")
     def open_update_reservation_page(self, person_name: str):
         """
         Opens form used to update reservation
