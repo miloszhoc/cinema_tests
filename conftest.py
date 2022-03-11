@@ -1,5 +1,9 @@
+import os
+
+import allure
 import pytest
 from env_data import APP_URL
+from utils.utils import DateUtils
 from driver import CreateDriver
 
 pytest_plugins = ('requests_fixtures',)
@@ -24,6 +28,17 @@ def pytest_runtest_makereport(item, call):
                 extra.append(pytest_html.extras.html(f'browser logs: <div>{str(web_driver.get_log("browser"))}</div>'))
                 image = web_driver.get_screenshot_as_base64()
                 extra.append(pytest_html.extras.image(image))
+
+                # Attach additional information to allure report
+                # Run only if allure is in use
+                if item.config.getoption('allure_report_dir') is not None:
+                    ss_path = DateUtils.add_timestamp('ss') + '.png'
+                    web_driver.save_screenshot(ss_path)
+                    allure.attach.file(ss_path, attachment_type=allure.attachment_type.PNG)
+                    allure.attach(str(web_driver.current_url), 'URL', attachment_type=allure.attachment_type.TEXT)
+                    allure.attach(str(web_driver.get_cookies()), 'COOKIES', attachment_type=allure.attachment_type.TEXT)
+                    os.remove(ss_path)
+
         report.extra = extra
 
 
@@ -31,8 +46,8 @@ def pytest_runtest_makereport(item, call):
 def setup_browser():
     driver = CreateDriver()
     # driver.set_driver('chrome', 'local', './drivers/chromedriver.exe', '--headless')
-    # driver.set_driver('chrome', 'local', './drivers/chromedriver.exe')
-    driver.set_driver('chrome', 'remote')
+    driver.set_driver('chrome', 'local', './drivers/chromedriver.exe')
+    # driver.set_driver('chrome', 'remote')
     browser = driver.get_current_driver()
 
     yield browser
