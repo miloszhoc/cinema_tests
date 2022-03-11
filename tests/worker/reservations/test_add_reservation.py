@@ -1,3 +1,4 @@
+import allure
 import pytest
 from selenium.common.exceptions import TimeoutException
 
@@ -60,8 +61,9 @@ def test_add_check_reservation_in_active_film_show(create_active_film_show, crea
     assert 'Rezerwacja została pomyślnie utworzona, na adres mailowy klienta została wysłana wiadomość z potwierdzeniem. Jeśli klient nie potwierdzi rezerwacji w ciągu 30 minut, to zostanie ona usunięta z systemu' \
            in page.get_message()
 
-    e = Email()
-    email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
+    with allure.step('Read email'):
+        e = Email()
+        email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
 
     assert '/potwierdz/' in email_content
     assert '/anuluj/' in email_content
@@ -120,5 +122,6 @@ def test_add_reservation_confirm_paid_instantly(create_active_film_show, create_
     assert 'Rezerwacja została pomyślnie utworzona. Nie została zaznaczona opcja wysyłki wiadomości email do klienta.' \
            in page.get_message()
 
-    assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
+    assert page.get_text(
+        page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
     assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_PAID_D, person_name=name)) == 'Tak'

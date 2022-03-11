@@ -1,5 +1,6 @@
 import re
 
+import allure
 import pytest
 from selenium.common.exceptions import TimeoutException
 
@@ -35,8 +36,9 @@ def test_client_confirm_reservation(create_active_film_show, create_ticket_type,
     assert 'Rezerwacja została pomyślnie utworzona, na twój adres mailowy została wysłana wiadomość z potwierdzeniem. Jeśli nie potwierdzisz rezerwacji w ciągu 30 minut, to zostanie ona automatycznie usunięta z systemu. W przypadku braku otrzymania wiadomości email prosimy o pilny kontakt telefoniczny.' \
            in page.get_message()
 
-    e = Email()
-    email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
+    with allure.step('Read email'):
+        e = Email()
+        email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
     confirm_url = APP_URL + re.findall('/potwierdz.*', email_content)[0]
 
     driver.get(confirm_url)
@@ -53,7 +55,8 @@ def test_client_confirm_reservation(create_active_film_show, create_ticket_type,
     from pom.worker.pages.film_show.film_show_details import FilmShowDetailsP
 
     page = FilmShowDetailsP(driver)
-    assert page.get_text(page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
+    assert page.get_text(
+        page.dynamic_locator(page.reservation_list.TEXT_RESERVATION_CONFIRMED_D, person_name=name)) == 'Tak'
 
 
 @pytest.mark.email
@@ -79,8 +82,9 @@ def test_client_reject_reservation(create_active_film_show, create_ticket_type, 
     assert 'Rezerwacja została pomyślnie utworzona, na twój adres mailowy została wysłana wiadomość z potwierdzeniem. Jeśli nie potwierdzisz rezerwacji w ciągu 30 minut, to zostanie ona automatycznie usunięta z systemu. W przypadku braku otrzymania wiadomości email prosimy o pilny kontakt telefoniczny.' \
            in page.get_message()
 
-    e = Email()
-    email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
+    with allure.step('Read email'):
+        e = Email()
+        email_content = e.wait_open_email('Potwierdzenie rezerwacji na seans ' + show_data['movie_data']['title'])
     reject_url = APP_URL + re.findall('/anuluj.*', email_content)[0]
 
     driver.get(reject_url)
