@@ -7,6 +7,8 @@ E2E and manual tests for [cinema project](https://github.com/miloszhoc/cinema).
 Test cases for manual testing
 are [here](https://docs.google.com/spreadsheets/d/1waFV-8ZkhgdNZUMMdUEsn7iaLLuMzJ9fWcIrPRdYdkg/edit#gid=0).
 
+---------------------
+
 ## Technologies:
 
 * python
@@ -20,6 +22,8 @@ are [here](https://docs.google.com/spreadsheets/d/1waFV-8ZkhgdNZUMMdUEsn7iaLLuMz
     * pytest-html
 * allure
 * testlink
+
+---------------------
 
 ## Running tests
 
@@ -68,7 +72,22 @@ Test supports allure reports. To run tests with report run `pytest --alluredir=.
 contains stacktrace, screen, and some additional info (like application's page URL where error occurred or browser
 cookies) for making debugging easier. In order to open report run `allure serve .\allure_results` command.
 
-### TestLink integration
+
+### Parallel execution
+
+For parallel tests execution tests uses pytest plugin - _pytest-dist_. To run tests in parallel user should
+run `pytest -n=<number of cpus>` command.
+
+### Markers
+
+This project uses pytest's markers for choosing which tests needs to be run. The following markers are available:
+
+- mail - used for marking tests which requires reading incoming emails
+- production - used for marking tests which can be run only against production environment
+
+---------------------
+
+## TestLink integration
 
 Test supports integration with TestLink in the scope of marking tests as passed or failed within the build.
 Functionality uses [TestLink-API-Python-client](https://github.com/lczub/TestLink-API-Python-client) plugin. 
@@ -89,20 +108,9 @@ The following parameters are required:
 Command example:   
 `pytest -k test_c4_login_invalid_credentials --build="test build" --testplan="test plan 1"`   
 
+-----------------------
 
-### Parallel execution
-
-For parallel tests execution tests uses pytest plugin - _pytest-dist_. To run tests in parallel user should
-run `pytest -n=<number of cpus>` command.
-
-### Markers
-
-This project uses pytest's markers for choosing which tests needs to be run. The following markers are available:
-
-- mail - used for marking tests which requires reading incoming emails
-- production - used for marking tests which can be run only against production environment
-
-# POM
+## POM
 
 ### Locators
 
@@ -118,11 +126,15 @@ Locators are written in UPPER_CASE. There are 2 types of locators in this projec
 
 Page names are written in CamelCase. Each page has 'P' as a postfix.
 
+---------------------
+
 ## Emails
 
 Tests use imaplib library and gmail account to handling incoming emails.
 
-# Preconditions
+---------------------
+
+## Preconditions
 
 There are two types of fixtures in this project:
 
@@ -130,7 +142,9 @@ There are two types of fixtures in this project:
 - requests fixtures which uses requests module (these kinds of fixtures do not require starting browser). Requests
   fixtures are used mainly for creating test data.
 
-# Files and folders
+---------------------
+
+## Files and folders
 
 Description of the most important files and folders in this project.
 
