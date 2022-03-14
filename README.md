@@ -73,8 +73,8 @@ cookies) for making debugging easier. In order to open report run `allure serve 
 Test supports integration with TestLink in the scope of marking tests as passed or failed within the build.
 Functionality uses [TestLink-API-Python-client](https://github.com/lczub/TestLink-API-Python-client) plugin. 
 The following env variables are required:   
-* TESTLINK_API_PYTHON_DEVKEY=[testlink API key]   
-* TESTLINK_API_PYTHON_SERVER_URL=http://[testlink domain name]/testlink/lib/api/xmlrpc/v1/xmlrpc.php   
+* `TESTLINK_API_PYTHON_DEVKEY=[testlink API key]`   
+* `TESTLINK_API_PYTHON_SERVER_URL=http://[testlink domain name]/testlink/lib/api/xmlrpc/v1/xmlrpc.php`   
 
 Each test function name consists of 3 parts separated by `_`:
 * `test` prefix (required by pytest),    
